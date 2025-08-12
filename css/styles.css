@@ -98,6 +98,41 @@ body {
     border-radius: 0.5rem;
     overflow: hidden;
     position: relative;
+
+/* Estilos para o botão de play do vídeo */
+#play-video-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: #374233;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#play-video-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+#play-video-btn i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Estilos específicos para Safari/iOS */
+@supports (-webkit-touch-callout: none) {
+    #play-video-btn {
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
     display: flex;
     align-items: flex-end;
     min-height: 350px;

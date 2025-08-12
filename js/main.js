@@ -21,32 +21,175 @@ function initializeVideoManagement() {
     if (!video || !videoFallback) return;
     
     let videoLoaded = false;
+    let autoplayAttempted = false;
+
+    // Detectar se é Safari com método mais robusto
+    const isSafari = (() => {
+        const ua = navigator.userAgent.toLowerCase();
+        return ua.includes('safari') && !ua.includes('chrome') && !ua.includes('android');
+    })();
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    // Debug info
+    console.log('Detecção de navegador:', {
+        userAgent: navigator.userAgent,
+        isSafari: isSafari,
+        isIOS: isIOS,
+        videoElement: video
+    });
+
+    // Função para tentar reproduzir o vídeo
+    async function attemptAutoplay() {
+        if (autoplayAttempted) return;
+        autoplayAttempted = true;
+
+        console.log('Tentando autoplay...');
+
+        try {
+            // Para Safari e iOS, tentar com configurações específicas
+            if (isSafari || isIOS) {
+                console.log('Configurando vídeo para Safari/iOS...');
+                video.muted = true;
+                video.playsInline = true;
+                video.autoplay = true;
+                video.setAttribute('webkit-playsinline', 'true');
+                
+                // Tentar reproduzir programaticamente
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    await playPromise;
+                    console.log('Vídeo reproduzido com sucesso no Safari/iOS');
+                }
+            } else {
+                // Para outros navegadores, usar autoplay normal
+                console.log('Tentando autoplay normal...');
+                await video.play();
+                console.log('Vídeo reproduzido com sucesso');
+            }
+        } catch (error) {
+            console.log('Autoplay falhou:', error.message);
+            console.log('Tipo de erro:', error.name);
+            handleAutoplayFailure();
+        }
+    }
+
+    // Função para lidar com falha do autoplay
+    function handleAutoplayFailure() {
+        console.log('Implementando fallback para autoplay...');
+        
+        // Mostrar fallback de imagem
+        videoFallback.classList.remove('hidden');
+        
+        // Criar botão de play manual se não existir
+        if (!document.getElementById('play-video-btn')) {
+            const playButton = document.createElement('button');
+            playButton.id = 'play-video-btn';
+            playButton.innerHTML = '<i class="fas fa-play"></i> Reproduzir Vídeo';
+            playButton.className = 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-90 text-black px-6 py-3 rounded-lg font-semibold hover:bg-opacity-100 transition-all z-20';
+            
+            // Adicionar evento de clique
+            playButton.addEventListener('click', async () => {
+                console.log('Botão de play clicado, tentando reproduzir...');
+                try {
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.setAttribute('webkit-playsinline', 'true');
+                    await video.play();
+                    playButton.style.display = 'none';
+                    videoFallback.classList.add('hidden');
+                    console.log('Vídeo reproduzido manualmente');
+                } catch (error) {
+                    console.log('Falha ao reproduzir manualmente:', error.message);
+                }
+            });
+            
+            // Adicionar ao container do vídeo
+            const videoContainer = video.parentElement;
+            if (videoContainer) {
+                videoContainer.appendChild(playButton);
+                console.log('Botão de play adicionado ao DOM');
+            }
+        }
+    }
 
     // Verificar se o vídeo carregou com sucesso
     video.addEventListener('loadeddata', () => {
+        console.log('Vídeo carregou dados');
         videoLoaded = true;
         videoFallback.classList.add('hidden');
+        
+        // Tentar autoplay após o carregamento
+        if (!autoplayAttempted) {
+            setTimeout(attemptAutoplay, 100);
+        }
     });
 
     // Verificar se o vídeo falhou ao carregar
-    video.addEventListener('error', () => {
+    video.addEventListener('error', (e) => {
+        console.log('Erro ao carregar vídeo:', e);
         videoFallback.classList.remove('hidden');
     });
 
     // Verificar se o vídeo pode ser reproduzido
     video.addEventListener('canplay', () => {
+        console.log('Vídeo pode ser reproduzido');
         videoLoaded = true;
         videoFallback.classList.add('hidden');
+        
+        // Tentar autoplay se ainda não foi tentado
+        if (!autoplayAttempted) {
+            setTimeout(attemptAutoplay, 100);
+        }
     });
+
+    // Eventos específicos para Safari/iOS
+    if (isSafari || isIOS) {
+        console.log('Configurando eventos específicos para Safari/iOS...');
+        
+        // Tentar autoplay quando a página se torna visível
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !autoplayAttempted) {
+                console.log('Página tornou-se visível, tentando autoplay...');
+                setTimeout(attemptAutoplay, 200);
+            }
+        });
+
+        // Tentar autoplay quando a janela ganha foco
+        window.addEventListener('focus', () => {
+            if (!autoplayAttempted) {
+                console.log('Janela ganhou foco, tentando autoplay...');
+                setTimeout(attemptAutoplay, 200);
+            }
+        });
+
+        // Tentar autoplay quando o usuário interage com a página
+        document.addEventListener('touchstart', () => {
+            if (!autoplayAttempted) {
+                console.log('Touch detectado, tentando autoplay...');
+                setTimeout(attemptAutoplay, 100);
+            }
+        }, { once: true });
+
+        document.addEventListener('click', () => {
+            if (!autoplayAttempted) {
+                console.log('Clique detectado, tentando autoplay...');
+                setTimeout(attemptAutoplay, 100);
+            }
+        }, { once: true });
+    }
 
     // Fallback para navegadores que não suportam vídeo
     if (video.readyState === 0) {
         setTimeout(() => {
             if (!videoLoaded) {
+                console.log('Timeout atingido, mostrando fallback');
                 videoFallback.classList.remove('hidden');
             }
         }, 3000); // Aguarda 3 segundos antes de mostrar fallback
     }
+
+    // Tentar autoplay inicial
+    setTimeout(attemptAutoplay, 500);
 }
 
 // ========================================
