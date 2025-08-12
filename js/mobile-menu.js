@@ -42,10 +42,20 @@ function initializeMobileMenu() {
         
         mobileMenuLinks.forEach((link) => {
             link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                const target = link.getAttribute('target');
+                
+                // Allow external links (like Instagram) to work normally
+                if (href.startsWith('http') || target === '_blank') {
+                    // Don't prevent default for external links
+                    // Just close the menu and let the link work
+                    closeMobileMenu();
+                    return;
+                }
+                
+                // For internal links, prevent default and handle navigation
                 e.preventDefault();
                 e.stopPropagation();
-                
-                const href = link.getAttribute('href');
                 
                 // Close menu first
                 closeMobileMenu();
@@ -61,7 +71,6 @@ function initializeMobileMenu() {
                     } else if (!href.startsWith('http')) {
                         window.location.href = href;
                     }
-                    // External links work normally
                 }, 300);
             });
         });
