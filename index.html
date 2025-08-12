@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dinamus Lisboa - Uma Igreja para a Cidade. Junte-se a nós nos nossos encontros semanais.">
+    <meta name="theme-color" content="#72473e">
+    <meta name="color-scheme" content="dark">
+    <title>Dinamus Lisboa - Uma Igreja para a Cidade</title>
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" as="style">
+    
+    <!-- DNS prefetch para recursos externos -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//maps.googleapis.com">
+    <link rel="dns-prefetch" href="//videos.pexels.com">
+    <link rel="dns-prefetch" href="//i.postimg.cc">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    
+    <!-- Tailwind CSS via Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts com display=swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome com defer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="img/dnms.jpg" type="image/jpeg">
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center" id="navbar">
+        <div class="container max-w-[1300px] mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#">
+                <img src="img/dnms-logo.png" alt="Logo Dinamus Lisboa" class="h-10" loading="eager">
+            </a>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#hero" class="text-white hover:text-gray-300 transition-colors">Dinamus Lisboa</a>
+                <a href="#encontros" class="text-white hover:text-gray-300 transition-colors">Encontros</a>
+                <a href="grupos-conexao.html" class="text-white hover:text-gray-300 transition-colors">Grupos de Conexão</a>
+                <a href="#visite" class="text-white hover:text-gray-300 transition-colors">Visite-nos</a>
+                <a href="https://www.instagram.com/igrejadinamus.lisboa" target="_blank" class="text-white hover:text-gray-300 transition-colors">
+                    <i class="fab fa-instagram text-lg mt-0.5"></i>
+                </a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none relative z-50" aria-label="Menu">
+                <div class="hamburger-menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </div>
+            </button>
+        </div>
+        
+        <!-- Menu Mobile Moderno -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 backdrop-blur-sm z-40 transform translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="flex flex-col justify-center items-center h-full space-y-8">
+                <a href="#hero" class="mobile-menu-link text-xl font-display text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-105 relative">
+                    Dinamus Lisboa
+                </a>
+                <a href="#encontros" class="mobile-menu-link text-xl text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-105 relative">
+                    Encontros
+                </a>
+                <a href="grupos-conexao.html" class="mobile-menu-link text-xl text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-105 relative">
+                    Grupos de Conexão
+                </a>
+                <a href="#visite" class="mobile-menu-link text-xl text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-105 relative">
+                    Visite-nos
+                </a>
+                <div class="pt-8">
+                    <a href="https://www.instagram.com/igrejadinamus.lisboa" target="_blank" class="mobile-menu-link text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-110 relative">
+                        <i class="fab fa-instagram text-3xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Video Background -->
+    <section id="hero" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden bg-overlay">
+        <!-- Vídeo otimizado com múltiplas qualidades -->
+        <video autoplay loop muted playsinline id="hero-video" preload="metadata" class="w-full h-full object-cover">
+            <!-- Vídeo de alta qualidade para desktop -->
+            <source src="video/hero.webm" type="video/webm" media="(min-width: 1024px)">
+            <!-- Vídeo de baixa qualidade para mobile -->
+            <source src="video/hero.webm" type="video/webm" media="(min-width: 768px)">
+            <!-- Fallback para navegadores antigos -->
+            <source src="video/hero-mobile.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Fallback de imagem para quando o vídeo não carrega -->
+        <div id="video-fallback" class="absolute inset-0 bg-cover bg-center hidden" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 1920 1080%27%3E%3Crect width=%271920%27 height=%271080%27 fill=%27%2372473e%27/%3E%3C/svg%3E'); z-index: 0;"></div>
+        
+        <div class="relative z-10 p-6 max-w-3xl mx-auto container px-12 text-center">
+            <h1 class="font-display text-5xl md:text-7xl leading-tight mb-4 observe-section" style="animation-delay: 0.3s;">
+                Bem-vindo à <span class="text-[#f2ebdb] flex flex-col">Dinamus Lisboa</span>
+            </h1>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+              <a href="#encontros" class="bg-white text-black font-semibold px-8 py-3 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105 observe-section" style="animation-delay: 0.9s;">
+                  Os Nossos Encontros
+              </a>
+              <a href="#visite" class="bg-primary text-white font-semibold px-8 py-3 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105 observe-section" style="animation-delay: 0.9s;">
+                  Visite-nos
+              </a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 z-10 animate-bounce">
+            <a href="#encontros"><i class="fas fa-chevron-down text-2xl text-white"></i></a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Encontros Section (Visual Cards) -->
+        <section id="encontros" class="py-20 md:py-32 bg-secondary">
+            <div class="container mx-auto px-4 lg:px-6 lg:px-12 text-center">
+                <div class="observe-section mb-12">
+                    <h2 class="font-display text-4xl md:text-5xl text-main mb-4">Os Nossos Encontros</h2>
+                    <p class="text-lg text-gray-700 max-w-2xl mx-auto">Junte-se a nós. É bem-vindo aqui.</p>
+                </div>
+                <div class="flex gap-14 text-white justify-center flex-col md:flex-row">
+                    <!-- CULTO CARD -->
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
+                             data-src="https://i.postimg.cc/FKSkMf2W/culto.jpg" 
+                             alt="Culto" 
+                             class="lazy-image absolute inset-0 w-full h-full object-cover"
+                             loading="lazy">
+                        <div class="card-content p-6 text-left w-full">
+                            <h3 class="font-display text-3xl">Culto</h3>
+                            <p class="font-bold text-lg">Todos os Domingos | 10:30</p>
+                            <p class="card-description text-gray-200 text-sm">Um tempo de louvor, adoração e uma mensagem inspiradora.</p>
+                            <a href="#visite" class="inline-block mt-4 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105">
+                                Ver Local
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- GRUPOS CARD -->
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto" style="animation-delay: 0.2s;">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
+                             data-src="https://images.pexels.com/photos/1655329/pexels-photo-1655329.jpeg" 
+                             alt="Grupos de Conexão" 
+                             class="lazy-image absolute inset-0 w-full h-full object-cover"
+                             loading="lazy">
+                        <div class="card-content p-6 text-left w-full">
+                            <h3 class="font-display text-3xl">GC</h3>
+                            <p class="font-bold text-lg">Durante a Semana</p>
+                            <p class="card-description text-gray-200 text-sm">Faça parte de um Grupo de Conexão que são pequenos grupos para estudar a Bíblia e criar ligações.</p>
+                            <a href="grupos-conexao.html" class="inline-block mt-4 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105">
+                                Ver Grupos
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ORAÇÃO CARD -->
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto" style="animation-delay: 0.4s;">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
+                             data-src="https://images.pexels.com/photos/19130852/pexels-photo-19130852.jpeg" 
+                             alt="Sala de Oração" 
+                             class="lazy-image absolute inset-0 w-full h-full object-cover"
+                             loading="lazy">
+                        <div class="card-content p-6 text-left w-full">
+                            <h3 class="font-display text-3xl">Sala de Oração</h3>
+                            <p class="font-bold text-lg">Todas as Quintas | 20:00</p>
+                            <p class="card-description text-gray-200 text-sm">Um momento para procurarmos a presença de Deus em oração.</p>
+                            <a href="#visite" class="inline-block mt-4 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105">
+                                Ver Local
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visite-nos Section -->
+        <section id="visite" class="py-20 md:py-32 bg-primary text-white">
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="h-96 md:h-[500px] rounded-lg overflow-hidden shadow-2xl observe-section">
+                        <div id="map-placeholder" class="w-full h-full bg-gray-300 flex items-center justify-center cursor-pointer" onclick="loadMap()">
+                            <div class="text-center">
+                                <i class="fas fa-map-marker-alt text-4xl text-gray-600 mb-2"></i>
+                                <p class="text-gray-600">Clique para abrir o mapa</p>
+                            </div>
+                        </div>
+                        <iframe id="google-map" class="hidden w-full h-full" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="text-center lg:text-left observe-section" style="animation-delay: 0.2s;">
+                        <h2 class="font-display text-4xl md:text-5xl mb-6">Esperamos por si.</h2>
+                        <div class="mb-6">
+                            <p class="text-xl font-bold">R. da Bela Vista, 25 - Cacém</p>
+                            <p class="text-lg text-gray-300">Culto todos os Domingos às 10:30</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <button onclick="openGoogleMaps()" class="bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Abrir no Google Maps
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <img src="img/dnms-logo.png" alt="Logo Dinamus Lisboa" class="h-12 mx-auto mb-4" loading="eager">
+            <p class="text-gray-500 text-sm">&copy; <span id="year"></span> Dinamus Lisboa. Todos os direitos reservados.</p>
+            <p class="text-gray-500 text-sm">
+                Criado por <a href="https://www.linkedin.com/in/allan-baron/" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">Allan Baron</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Smooth Scroll Polyfill -->
+    <script src="https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
+    
+    <!-- JavaScript Global (deve ser carregado primeiro) -->
+    <script src="js/global.js"></script>
+    
+    <!-- JavaScript do Menu Mobile -->
+    <script src="js/mobile-menu.js"></script>
+    
+    <!-- JavaScript da Página Principal -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+/* CSS crítico inline para renderização mais rápida */
+body {
+    background-color: #121212;
+    color: #f2ebdb;
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-display {
+    font-family: 'Caprasimo', sans-serif;
+}
+
+.text-main { 
+    color: #374233; 
+}
+
+.bg-primary { 
+    background-color: #72473e; 
+}
+
+.bg-secondary { 
+    background-color: #f2ebdb; 
+}
+
+.text-accent { 
+    color: #72473e; 
+}
+
+/* Lazy loading para imagens */
+.lazy-image {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.lazy-image.loaded {
+    opacity: 1;
+}
+
+/* Animation for elements fading in on scroll */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.observe-section {
+    opacity: 0;
+    will-change: opacity, transform;
+}
+
+.fade-in-section {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Overlay for background images */
+.bg-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+.section-bg-overlay {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.section-bg-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(18, 18, 18, 0.85);
+    z-index: 1;
+}
+
+.section-content, .card-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Styling for cards with background images */
+.image-card {
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 350px;
+    transition: transform 0.3s ease;
+    will-change: transform;
+    cursor: pointer;
+}
+
+.image-card:hover {
+    transform: scale(1.02);
+}
+
+.image-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0) 60%);
+    z-index: 1;
+}
+
+/* Hero Video Background */
+#hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 1;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+/* CSS for hover effect on card description */
+.card-description {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out, margin-top 0.3s ease-in-out, margin-bottom 0.3s ease-in-out, transform 0.3s ease-in-out;
+    margin-bottom: 0;
+}
+
+/* Mostrar descrição no hover OU quando o card está ativo (clicado) */
+.image-card:hover .card-description,
+.image-card.active .card-description {
+    opacity: 1;
+    max-height: 100px;
+    margin-top: 0.5rem;
+    margin-bottom: 4rem;
+    transform: translateY(0);
+}
+
+/* CSS for hiding buttons in encontros cards and showing on hover */
+.image-card a {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-in-out 0.2s, transform 0.3s ease-in-out 0.2s;
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 3;
+}
+
+/* Mostrar botão no hover OU quando o card está ativo (clicado) */
+.image-card:hover a,
+.image-card.active a {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in-out 0.2s, transform 0.3s ease-in-out 0.2s;
+}
+
+/* Quando o hover termina E o card não está ativo, ocultar elementos */
+.image-card:not(:hover):not(.active) .card-description {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out 0.2s, max-height 0.3s ease-in-out 0.2s, margin-top 0.3s ease-in-out 0.2s, margin-bottom 0.3s ease-in-out 0.2s, transform 0.3s ease-in-out 0.2s;
+}
+
+.image-card:not(:hover):not(.active) a {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+/* Loading skeleton para imagens */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { 
+        background-position: 200% 0; 
+    }
+    100% { 
+        background-position: -200% 0; 
+    }
+}
+
+/* Responsive optimizations */
+@media (max-width: 768px) {
+    .image-card {
+        min-height: 280px;
+    }
+    
+    .fade-in-section {
+        animation-duration: 0.4s;
+    }
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Scroll offset for fixed header */
+section[id] {
+    scroll-margin-top: 100px;
+}
+
+/* Navigation link transitions */
+nav a {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #72473e;
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after,
+nav a.text-accent::after {
+    width: 100%;
+}
+
+/* Grupos de Conexão Cards */
+.grupo-card {
+    transition: all 0.3s ease-in-out;
+    transform: translateY(0);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.grupo-card .bg-cover {
+    transition: transform 0.3s ease-in-out;
+    flex-shrink: 0;
+}
+
+.grupo-card:hover .bg-cover {
+    transform: scale(1.05);
+}
+
+.grupo-card .p-6 {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.grupo-card .flex-grow {
+    flex-grow: 1;
+}
+
+.grupo-card .mt-auto {
+    margin-top: auto;
+}
+
+/* Filtros de grupos */
+.filter-btn {
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    box-shadow: 0 4px 12px rgba(114, 71, 62, 0.3);
+}
+
+/* Campo de busca */
+#search-grupos {
+    transition: all 0.3s ease-in-out;
+}
+
+#search-grupos:focus {
+    box-shadow: 0 0 0 3px rgba(114, 71, 62, 0.1);
+}
+
+/* Estado vazio dos grupos */
+.grupos-empty {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Print styles */
+@media print {
+    .bg-overlay::before,
+    .section-bg-overlay::before {
+        display: none;
+    }
+    
+    .image-card::before {
+        display: none;
+    }
+    
+    #hero-video {
+        display: none;
+    }
+}
+
+/* ========================================
+   MENU MOBILE MODERNO
+   ======================================== */
+
+/* Hamburger Menu Button */
+.hamburger-menu {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+/* Hamburger Animation - Active State */
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* Mobile Menu Animation */
+#mobile-menu {
+    transform: translateX(100%);
+}
+
+#mobile-menu.active {
+    transform: translateX(0);
+}
+
+/* Mobile Menu Links Animation */
+.mobile-menu-link {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    text-decoration: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+    touch-action: manipulation;
+}
+
+#mobile-menu.active .mobile-menu-link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mobile-menu-link:hover {
+    background-color: rgba(242, 235, 219, 0.1);
+}
+
+/* Staggered animation for menu items */
+#mobile-menu.active .mobile-menu-link:nth-child(1) { transition-delay: 0.1s; }
+#mobile-menu.active .mobile-menu-link:nth-child(2) { transition-delay: 0.2s; }
+#mobile-menu.active .mobile-menu-link:nth-child(3) { transition-delay: 0.3s; }
+#mobile-menu.active .mobile-menu-link:nth-child(4) { transition-delay: 0.4s; }
+#mobile-menu.active .mobile-menu-link:nth-child(5) { transition-delay: 0.5s; }
+
+/* Hover effects for mobile menu links */
+.mobile-menu-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #f2ebdb;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.mobile-menu-link:hover::after,
+.mobile-menu-link.text-accent::after {
+    width: 100%;
+}
+
+/* Active state for mobile menu links */
+.mobile-menu-link.text-accent {
+    color: #72473e !important;
+    font-weight: 600;
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        width: 25px;
+        height: 18px;
+    }
+    
+    .hamburger-line {
+        height: 2.5px;
+    }
+    
+    .hamburger-menu.active .hamburger-line:nth-child(1) {
+        transform: translateY(7.75px) rotate(45deg);
+    }
+    
+    .hamburger-menu.active .hamburger-line:nth-child(3) {
+        transform: translateY(-7.75px) rotate(-45deg);
+    }
+} 
