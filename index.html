@@ -131,13 +131,22 @@
 
     <!-- Hero Section with Video Background -->
     <section id="hero" class="relative h-screen flex items-center justify-center text-center text-white overflow-hidden bg-overlay">
-        <!-- Vídeo otimizado com múltiplas qualidades -->
+        <!-- 
+            Vídeo otimizado com fallback inteligente:
+            - WebM como formato principal (melhor compressão, menor tamanho)
+            - MP4 como fallback para navegadores que não suportam WebM
+            - JavaScript detecta automaticamente o suporte e otimiza o carregamento
+            - Fallback de imagem caso ambos os formatos falhem
+        -->
         <video autoplay loop muted playsinline id="hero-video" preload="metadata" class="w-full h-full object-cover" webkit-playsinline>
-            <!-- Vídeo de alta qualidade para desktop -->
+            <!-- WebM como formato principal (melhor compressão e qualidade) -->
             <source src="video/hero.webm" type="video/webm" media="(min-width: 1024px)">
-            <!-- Vídeo de baixa qualidade para mobile -->
             <source src="video/hero.webm" type="video/webm" media="(min-width: 768px)">
-            <!-- Fallback para navegadores antigos -->
+            <source src="video/hero-mobile.webm" type="video/webm">
+            
+            <!-- MP4 como fallback para navegadores que não suportam WebM -->
+            <source src="video/hero.mp4" type="video/mp4" media="(min-width: 1024px)">
+            <source src="video/hero.mp4" type="video/mp4" media="(min-width: 768px)">
             <source src="video/hero-mobile.mp4" type="video/mp4">
         </video>
         

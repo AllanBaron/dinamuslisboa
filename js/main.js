@@ -22,6 +22,38 @@ function initializeVideoManagement() {
     
     let videoLoaded = false;
     let autoplayAttempted = false;
+    
+    // Detectar suporte a formatos de vídeo
+    function detectVideoSupport() {
+        const videoElement = document.createElement('video');
+        const webmSupport = videoElement.canPlayType('video/webm; codecs="vp8, vorbis"');
+        const mp4Support = videoElement.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+        
+        console.log('Suporte a formatos de vídeo:', {
+            webm: webmSupport,
+            mp4: mp4Support
+        });
+        
+        return { webmSupport, mp4Support };
+    }
+    
+    // Aplicar otimizações baseadas no suporte do navegador
+    function optimizeVideoSources() {
+        const { webmSupport, mp4Support } = detectVideoSupport();
+        
+        if (!webmSupport && mp4Support) {
+            console.log('WebM não suportado, usando apenas MP4');
+            // O navegador automaticamente usará o MP4 como fallback
+        } else if (webmSupport) {
+            console.log('WebM suportado, usando como formato principal');
+            // O navegador usará WebM primeiro, depois MP4 como fallback
+        } else {
+            console.log('Nenhum formato suportado, usando fallback de imagem');
+        }
+    }
+    
+    // Executar otimizações
+    optimizeVideoSources();
 
     // Detectar se é Safari com método mais robusto
     const isSafari = (() => {
@@ -118,6 +150,18 @@ function initializeVideoManagement() {
         videoLoaded = true;
         videoFallback.classList.add('hidden');
         
+        // Detectar qual formato foi carregado
+        const currentSrc = video.currentSrc || video.src;
+        const isWebM = currentSrc.includes('.webm');
+        const isMP4 = currentSrc.includes('.mp4');
+        
+        console.log('Formato de vídeo carregado:', {
+            src: currentSrc,
+            isWebM: isWebM,
+            isMP4: isMP4,
+            format: isWebM ? 'WebM' : isMP4 ? 'MP4' : 'Desconhecido'
+        });
+        
         // Tentar autoplay após o carregamento
         if (!autoplayAttempted) {
             setTimeout(attemptAutoplay, 100);
@@ -127,7 +171,18 @@ function initializeVideoManagement() {
     // Verificar se o vídeo falhou ao carregar
     video.addEventListener('error', (e) => {
         console.log('Erro ao carregar vídeo:', e);
-        videoFallback.classList.remove('hidden');
+        
+        // Tentar carregar o formato alternativo
+        const currentSrc = video.currentSrc || video.src;
+        if (currentSrc.includes('.webm')) {
+            console.log('WebM falhou, tentando MP4...');
+            // O navegador automaticamente tentará o próximo source (MP4)
+        } else if (currentSrc.includes('.mp4')) {
+            console.log('MP4 falhou, mostrando fallback de imagem');
+            videoFallback.classList.remove('hidden');
+        } else {
+            videoFallback.classList.remove('hidden');
+        }
     });
 
     // Verificar se o vídeo pode ser reproduzido
