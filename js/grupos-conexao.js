@@ -8,37 +8,48 @@ const dadosEstaticos = {
     "grupos": [
         {
             "id": "gc-huios",
-            "titulo": "GC Huios",
-            "local": "Lisboa - Odivelas",
+            "titulo": "Huios",
+            "local": "Lisboa - Loures",
             "dia": "Sexta-feira",
+            "hora": "20:30",
+            "regiao": "lisboa",
+            "imagem": "img/gc/huios.jpg",
+            "whatsapp": "351932819689",
+            "descricao": "Grupo de Jovens"
+        },
+        {
+            "id": "gc-ekballo",
+            "titulo": "Ekballo",
+            "local": "Sintra - Oeiras",
+            "dia": "Sábado",
+            "hora": "17:00",
+            "regiao": "sintra",
+            "imagem": "img/gc/ekballo.jpg",
+            "whatsapp": "351910459745",
+            "descricao": "Grupo de Jovens e Adolescentes"
+        },
+        {
+            "id": "gc-os-valentes-benfica",
+            "titulo": "Os Valentes",
+            "local": "Lisboa - Benfica",
+            "dia": "Quinta-feira",
             "hora": "20:00",
             "regiao": "lisboa",
-            "imagem": "img/gc_huios.png",
-            "whatsapp": "351912345678",
-            "descricao": "Grupo de estudo bíblico e comunhão"
+            "imagem": "img/gc/os-valentes.jpg",
+            "whatsapp": "351938070194",
+            "descricao": "Grupo de Adultos e Casais"
         },
         {
-            "id": "gc-bemfica",
-            "titulo": "GC Bemfica",
-            "local": "Lisboa - Bemfica",
+            "id": "gc-os-valentes-cacem",
+            "titulo": "Os Valentes",
+            "local": "Sintra - Cacém",
             "dia": "Sexta-feira",
-            "hora": "19:30",
-            "regiao": "lisboa",
-            "imagem": "img/gc_huios.png",
-            "whatsapp": "351912345679",
-            "descricao": "Grupo de jovens e adultos"
-        },
-        {
-            "id": "gc-sintra-centro",
-            "titulo": "GC Sintra Centro",
-            "local": "Sintra - Centro",
-            "dia": "Quinta-feira",
-            "hora": "19:30",
+            "hora": "20:00",
             "regiao": "sintra",
-            "imagem": "img/gc_huios.png",
-            "whatsapp": "351912345679",
-            "descricao": "Grupo de jovens e adultos"
-        },
+            "imagem": "img/gc/os-valentes.jpg",
+            "whatsapp": "351925677525",
+            "descricao": "Grupo de Adultos e Casais"
+        }
     ]
 };
 
@@ -54,7 +65,7 @@ function carregarGrupos() {
     criarFiltrosDinamicos();
     
     // Renderizar grupos
-    renderizarGrupos();
+    renderizarGruposComAnimacao();
     
     // Inicializar observadores de animação
     inicializarObservadores();
@@ -126,7 +137,7 @@ function aplicarFiltro(regiao) {
     if (termoBusca) {
         aplicarBusca(termoBusca);
     } else {
-        renderizarGrupos();
+        renderizarGruposComAnimacao();
     }
 }
 
@@ -148,11 +159,11 @@ function aplicarBusca(termo) {
                grupo.descricao.toLowerCase().includes(termoLower);
     });
     
-    renderizarGrupos();
+    renderizarGruposComAnimacao();
 }
 
-// Renderizar grupos na grid
-function renderizarGrupos() {
+// Renderizar grupos com animação especial para filtros
+function renderizarGruposComAnimacao() {
     const grid = document.getElementById('grupos-grid');
     
     if (gruposFiltrados.length === 0) {
@@ -168,32 +179,62 @@ function renderizarGrupos() {
         return;
     }
     
-    grid.innerHTML = gruposFiltrados.map(grupo => `
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden observe-section grupo-card flex flex-col" data-categoria="${grupo.regiao}">
-            <div class="h-48 bg-cover bg-center" style="background-image: url('${grupo.imagem}');"></div>
-            <div class="p-6 flex flex-col flex-grow">
-                <div class="flex-grow">
-                    <h3 class="font-display text-2xl text-main mb-2">${grupo.titulo}</h3>
-                    <p class="text-gray-600 mb-4">
-                        <i class="fas fa-map-marker-alt text-primary mr-2"></i>
-                        ${grupo.local}
-                    </p>
-                    <p class="text-gray-600 mb-4">
-                        <i class="fas fa-calendar-alt text-primary mr-2"></i>
-                        ${grupo.dia} - ${grupo.hora}
-                    </p>
-                    <p class="text-gray-500 text-sm mb-4">${grupo.descricao}</p>
+    // Adicionar classe para animação de filtro
+    grid.classList.add('filtering');
+    
+    // Criar HTML com elementos inicialmente invisíveis
+    grid.innerHTML = gruposFiltrados.map((grupo, index) => `
+        <div class="grupo-card observe-section filter-animate" 
+             data-categoria="${grupo.regiao}" 
+             style="animation-delay: ${index * 0.08}s;">
+            <!-- Imagem do card -->
+            <div class="card-image" style="background-image: url('${grupo.imagem}');">
+            </div>
+            
+            <!-- Conteúdo do card -->
+            <div class="card-content">
+                <!-- Título e Descrição -->
+                <div class="grupo-header">
+                    <h3 class="grupo-titulo">${grupo.titulo}</h3>
+                    <p class="grupo-descricao">${grupo.descricao}</p>
                 </div>
-                <div class="mt-auto pt-4">
-                    <a href="https://wa.me/${grupo.whatsapp}?text=Olá! Gostaria de saber mais sobre o ${grupo.titulo}" 
-                       target="_blank" 
-                       class="inline-flex items-center justify-center w-full bg-green-500 text-white font-semibold px-4 py-3 rounded-lg hover:bg-green-600 transition-all transform hover:scale-105">
-                        <i class="fab fa-whatsapp mr-2"></i>
+                
+                <!-- Local -->
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-value">${grupo.local}</div>
+                    </div>
+                </div>
+                
+                <!-- Dia e Hora -->
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-value">${grupo.dia} às ${grupo.hora}</div>
+                    </div>
+                </div>
+                
+                <!-- Botão WhatsApp -->
+                <div class="whatsapp-btn">
+                    <a href="https://wa.me/${grupo.whatsapp}?text=Olá! Gostaria de saber mais sobre o grupo ${grupo.titulo}" 
+                       target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Entrar em Contacto
                     </a>
                 </div>
             </div>
         </div>
     `).join('');
+    
+    // Remover classe de filtro após um tempo
+    setTimeout(() => {
+        grid.classList.remove('filtering');
+    }, 100);
     
     // Reinicializar observadores após renderizar
     inicializarObservadores();
@@ -219,7 +260,7 @@ function limparFiltros() {
         botaoTodos.classList.add('active', 'bg-primary', 'text-white');
     }
     
-    renderizarGrupos();
+    renderizarGruposComAnimacao();
 }
 
 // Tornar função acessível globalmente
@@ -229,22 +270,39 @@ window.limparFiltros = limparFiltros;
 function inicializarObservadores() {
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -100px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                // Adicionar classe animate para ativar as animações em cascata
+                entry.target.classList.add('animate');
+                
+                // Remover o observador após a animação
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
     document.querySelectorAll('.observe-section').forEach(section => {
+        // Garantir que os elementos comecem invisíveis mas não com visibility hidden
+        // Manter o conteúdo dos cards sempre visível
         section.style.opacity = '0';
         section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        
+        // Garantir que os títulos sejam sempre visíveis
+        const titulo = section.querySelector('.grupo-titulo');
+        const descricao = section.querySelector('.grupo-descricao');
+        if (titulo) {
+            titulo.style.opacity = '1';
+            titulo.style.visibility = 'visible';
+        }
+        if (descricao) {
+            descricao.style.opacity = '1';
+            descricao.style.visibility = 'visible';
+        }
+        
         observer.observe(section);
     });
 }
