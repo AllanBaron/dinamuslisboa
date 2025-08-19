@@ -175,14 +175,14 @@
     <main>
         <!-- Encontros Section (Visual Cards) -->
         <section id="encontros" class="py-20 md:py-32 bg-secondary">
-            <div class="container mx-auto px-4 lg:px-6 lg:px-12 text-center">
+            <div class="container mx-auto px-12 text-center">
                 <div class="observe-section mb-12">
                     <h2 class="font-display text-4xl md:text-5xl text-main mb-4">Os Nossos Encontros</h2>
-                    <p class="text-lg text-gray-700 max-w-2xl mx-auto">Junte-se a nós. É bem-vindo aqui.</p>
+                    <p class="text-lg text-gray-700 max-w-2xl mx-auto">Junte-se a nós.</p>
                 </div>
-                <div class="flex gap-14 text-white justify-center flex-col md:flex-row">
+                <div class="flex gap-14 text-white justify-center flex-col md:flex-row flex-wrap items-center">
                     <!-- CULTO CARD -->
-                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto">
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
                              data-src="img/culto.jpg" 
                              alt="Culto" 
@@ -199,7 +199,7 @@
                     </div>
 
                     <!-- GRUPOS CARD -->
-                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto" style="animation-delay: 0.2s;">
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]" style="animation-delay: 0.2s;">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
                              data-src="https://images.pexels.com/photos/1655329/pexels-photo-1655329.jpeg" 
                              alt="Grupos de Conexão" 
@@ -216,7 +216,7 @@
                     </div>
 
                     <!-- ORAÇÃO CARD -->
-                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto" style="animation-delay: 0.4s;">
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]" style="animation-delay: 0.4s;">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
                              data-src="https://images.pexels.com/photos/19130852/pexels-photo-19130852.jpeg" 
                              alt="Sala de Oração" 
@@ -224,11 +224,80 @@
                              loading="lazy">
                         <div class="card-content p-6 text-left w-full">
                             <h3 class="font-display text-3xl">Sala de Oração</h3>
-                            <p class="font-bold text-lg">Todas as Quintas | 20:00</p>
+                            <p class="font-bold text-lg">Todas as Quartas | 20:00</p>
                             <p class="card-description text-gray-200 text-sm">Um momento para procurarmos a presença de Deus em oração.</p>
                             <a href="#visite" class="inline-block mt-4 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105">
                                 Ver Local
                             </a>
+                        </div>
+                    </div>
+
+                    <!-- HANGOUT CARD -->
+                    <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]" style="animation-delay: 0.6s;">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 350'%3E%3Crect width='300' height='350' fill='%2372473e'/%3E%3C/svg%3E" 
+                             data-src="img/hangout.jpg" 
+                             alt="Hangout" 
+                             class="lazy-image absolute inset-0 w-full h-full object-cover"
+                             loading="lazy">
+                        <div class="card-content p-6 text-left w-full">
+                            <h3 class="font-display text-3xl">Hangout</h3>
+                            <p class="font-bold text-lg">Encontros Mensais</p>
+                            <p class="card-description text-gray-200 text-sm">Inspiramos, capacitamos e aceleramos empreendedores em todos os níveis através da Sabedoria bíblica.</p>
+                            <a href="https://instagram.com/hangout.eu/" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 bg-white text-black font-semibold px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105">
+                                Ver no Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Missão Section -->
+        <section class="py-20 md:py-32 bg-gradient-to-br from-[#72473e] via-[#8b5a47] to-[#a67c5a] relative overflow-hidden">
+            <!-- Enhanced Background Pattern -->
+            <div class="absolute inset-0" style="opacity: 0.15;">
+                <div class="absolute inset-0" style="background-image: 
+                    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15) 0%, transparent 40%), 
+                    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.12) 0%, transparent 45%),
+                    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);"></div>
+            </div>
+            
+            <!-- Enhanced Floating Elements with better animations -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white rounded-full floating-element" style="background-color: rgba(255,255,255,0.15); animation-delay: 0s;"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white rounded-full floating-element" style="background-color: rgba(255,255,255,0.12); animation-delay: 1.5s;"></div>
+            <div class="absolute bottom-32 left-20 w-12 h-12 bg-white rounded-full floating-element" style="background-color: rgba(255,255,255,0.10); animation-delay: 3s;"></div>
+            <div class="absolute bottom-20 right-32 w-24 h-24 bg-white rounded-full floating-element" style="background-color: rgba(255,255,255,0.12); animation-delay: 0.8s;"></div>
+            
+            <!-- Additional subtle floating elements -->
+            <div class="absolute top-60 left-1/4 w-8 h-8 bg-white rounded-full floating-element-small" style="background-color: rgba(255,255,255,0.08); animation-delay: 2.2s;"></div>
+            <div class="absolute bottom-40 right-1/3 w-10 h-10 bg-white rounded-full floating-element-small" style="background-color: rgba(255,255,255,0.06); animation-delay: 1.8s;"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16 observe-section mission-header">
+                    <h2 class="font-display text-4xl md:text-6xl text-white mb-6 mission-title">
+                        <span class="text-[#f2ebdb] mission-word">Nossa</span>
+                        <span class="mission-word">Missão</span>
+                    </h2>
+                    <div class="w-24 h-1 bg-[#f2ebdb] mx-auto rounded-full mission-underline"></div>
+                </div>
+                
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl observe-section mission-card">
+                        <div class="text-center">
+                            <div class="mb-8">
+                                <div class="max-w-5xl mx-auto">
+                                    <h3 class="font-display text-xl md:text-2xl lg:text-3xl text-[#72473e] leading-relaxed mission-text">
+                                        SER UMA FAMÍLIA DE CRISTÃOS ÍNTIMOS DE DEUS, COM REVELAÇÃO DO SEU AMOR E DO PODER DO ESPÍRITO SANTO, PARA SALVAR O MUNDO ATRAVÉS DE DISCÍPULOS QUE DESENVOLVEM SEUS DONS, TRANSFORMANDO CIDADES E NAÇÕES!
+                                    </h3>
+                                </div>
+                            </div>
+                            
+                            <!-- Enhanced Decorative Elements -->
+                            <div class="flex justify-center items-center gap-8 mission-decoration">
+                                <div class="w-16 h-1 bg-gradient-to-r from-transparent to-[#72473e] rounded-full decoration-line"></div>
+                                <i class="fas fa-cross text-2xl text-[#72473e] decoration-icon"></i>
+                                <div class="w-16 h-1 bg-gradient-to-l from-transparent to-[#72473e] rounded-full decoration-line"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

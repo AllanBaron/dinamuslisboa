@@ -98,6 +98,16 @@ body {
     border-radius: 0.5rem;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 350px;
+    max-height: 430px;
+    min-width: 300px;
+    width: 100%;
+    transition: transform 0.3s ease;
+    will-change: transform;
+    cursor: pointer;
+}
 
 /* Estilos para o botão de play do vídeo */
 #play-video-btn {
@@ -133,13 +143,6 @@ body {
         -webkit-tap-highlight-color: transparent;
     }
 }
-    display: flex;
-    align-items: flex-end;
-    min-height: 350px;
-    transition: transform 0.3s ease;
-    will-change: transform;
-    cursor: pointer;
-}
 
 .image-card:hover {
     transform: scale(1.02);
@@ -154,6 +157,11 @@ body {
     bottom: 0;
     background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0) 60%);
     z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.image-card:hover::before {
+    background: linear-gradient(to top, rgba(0,0,0,0.98) 40%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.2) 100%);
 }
 
 /* Hero Video Background */
@@ -251,6 +259,27 @@ body {
     }
 }
 
+/* Image card animations when visible */
+.image-card.observe-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.image-card.fade-in-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animations for image cards */
+.image-card[style*="animation-delay: 0.2s"].fade-in-section {
+    animation-delay: 0.2s;
+}
+
+.image-card[style*="animation-delay: 0.4s"].fade-in-section {
+    animation-delay: 0.4s;
+}
+
 /* Smooth scroll behavior */
 html {
     scroll-behavior: smooth;
@@ -265,6 +294,55 @@ section[id] {
 nav a {
     transition: all 0.3s ease;
     position: relative;
+}
+
+/* Hero title animations */
+h1.observe-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+h1.fade-in-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero button animations */
+a.observe-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+a.fade-in-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animations for hero elements */
+h1[style*="animation-delay: 0.3s"].fade-in-section {
+    transition-delay: 0.3s;
+}
+
+a[style*="animation-delay: 0.9s"].fade-in-section {
+    transition-delay: 0.9s;
+}
+
+/* Initial states for elements with animation delays */
+h1[style*="animation-delay"] {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+a[style*="animation-delay"] {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.image-card[style*="animation-delay"] {
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 nav a::after {
@@ -362,6 +440,54 @@ nav a.text-accent::after {
     #hero-video {
         display: none;
     }
+}
+
+/* ===== GENERAL OBSERVE-SECTION ANIMATIONS ===== */
+
+/* Section headers and titles */
+.observe-section h2,
+.observe-section h3,
+.observe-section p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-out;
+}
+
+.fade-in-section h2,
+.fade-in-section h3,
+.fade-in-section p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered animations for section content */
+.observe-section h2 {
+    transition-delay: 0.1s;
+}
+
+.observe-section h3 {
+    transition-delay: 0.2s;
+}
+
+.observe-section p {
+    transition-delay: 0.3s;
+}
+
+/* Map section animations */
+#map-placeholder.observe-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+#map-placeholder.fade-in-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Visit section text animations */
+.observe-section[style*="animation-delay: 0.2s"] {
+    transition-delay: 0.2s;
 }
 
 /* ========================================
@@ -492,4 +618,268 @@ body.menu-open {
     .hamburger-menu.active .hamburger-line:nth-child(3) {
         transform: translateY(-7.75px) rotate(-45deg);
     }
-} 
+}
+
+/* ===== MISSÃO SECTION ANIMATIONS ===== */
+
+/* Enhanced floating elements with smooth floating animation */
+.floating-element {
+    animation: float 6s ease-in-out infinite;
+    filter: blur(0.5px);
+    /* Ensure floating elements are always visible */
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.floating-element-small {
+    animation: float 8s ease-in-out infinite;
+    filter: blur(0.3px);
+    /* Ensure floating elements are always visible */
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.6;
+    }
+    25% {
+        transform: translateY(-15px) rotate(2deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-25px) rotate(0deg);
+        opacity: 1;
+    }
+    75% {
+        transform: translateY(-15px) rotate(-2deg);
+        opacity: 0.8;
+    }
+}
+
+/* Mission header animations - triggered by observe-section */
+.mission-title {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: all 0.8s ease-out;
+}
+
+.mission-underline {
+    width: 0;
+    opacity: 0;
+    transition: all 1.2s ease-out 0.3s;
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mission header initial state */
+.mission-header {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1.5s ease-out;
+}
+
+/* Mission header when visible */
+.mission-header.fade-in-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mission title when visible */
+.mission-header.fade-in-section .mission-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mission underline when visible */
+.mission-header.fade-in-section .mission-underline {
+    width: 6rem;
+    opacity: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes expandWidth {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 6rem;
+        opacity: 1;
+    }
+}
+
+/* Mission card initial state */
+.mission-card {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    transition: all 1.2s ease-out 0.4s, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Mission card when visible */
+.mission-card.fade-in-section {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Mission text initial state */
+.mission-text {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1.4s ease-out 0.6s;
+}
+
+/* Mission text when visible */
+.mission-card.fade-in-section .mission-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes textReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mission decoration initial states */
+.decoration-line {
+    width: 0;
+    opacity: 0;
+    transition: all 1.2s ease-out 0.8s;
+}
+
+.decoration-icon {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 1.2s ease-out 1s;
+}
+
+/* Mission decoration when visible */
+.mission-card.fade-in-section .decoration-line {
+    width: 4rem;
+    opacity: 1;
+}
+
+.mission-card.fade-in-section .decoration-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+@keyframes lineExpand {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 4rem;
+        opacity: 1;
+    }
+}
+
+@keyframes iconBounce {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Hover effects for mission card */
+.mission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mission-card:hover .floating-element {
+    animation-duration: 4s;
+}
+
+.mission-card:hover .floating-element-small {
+    animation-duration: 6s;
+}
+
+/* Responsive adjustments for mission section */
+@media (max-width: 768px) {
+    .floating-element {
+        animation-duration: 8s;
+    }
+    
+    .floating-element-small {
+        animation-duration: 10s;
+    }
+    
+    .mission-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    /* Slower animations on mobile for better performance */
+    .mission-title {
+        animation-duration: 1.5s;
+    }
+    
+    .mission-underline {
+        animation-duration: 1.8s;
+    }
+    
+    .mission-card {
+        animation-duration: 1.8s;
+    }
+    
+    .mission-text {
+        animation-duration: 2s;
+    }
+    
+    .decoration-line {
+        animation-duration: 1.8s;
+    }
+    
+    .decoration-icon {
+        animation-duration: 2s;
+    }
+}

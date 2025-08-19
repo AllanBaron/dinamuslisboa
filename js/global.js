@@ -38,14 +38,28 @@ const observer = new IntersectionObserver((entries) => {
             // Use requestAnimationFrame for better performance
             requestAnimationFrame(() => {
                 entry.target.classList.add('fade-in-section');
+                
+                // Trigger animations for child elements if they have specific delays
+                const childElements = entry.target.querySelectorAll('[style*="animation-delay"]');
+                childElements.forEach(child => {
+                    const delay = child.style.animationDelay || '0s';
+                    const delayValue = parseFloat(delay) * 1000; // Convert to milliseconds
+                    
+                    setTimeout(() => {
+                        child.style.opacity = '1';
+                        child.style.transform = 'translateY(0)';
+                    }, delayValue);
+                });
             });
-            observer.unobserve(entry.target);
         }
     });
 }, { threshold: 0.1, rootMargin: '50px' });
 
-document.querySelectorAll('.observe-section').forEach(section => {
-    observer.observe(section);
+// Initialize observer when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.observe-section').forEach(section => {
+        observer.observe(section);
+    });
 });
 
 // ========================================
