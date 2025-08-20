@@ -29,7 +29,7 @@ const dadosEstaticos = {
             "descricao": "Grupo de Jovens e Adolescentes"
         },
         {
-            "id": "gc-os-valentes-benfica",
+            "id": "os-valentes-benfica",
             "titulo": "Os Valentes",
             "local": "Lisboa - Benfica",
             "dia": "Quinta-feira",
@@ -40,13 +40,13 @@ const dadosEstaticos = {
             "descricao": "Grupo de Adultos e Casais"
         },
         {
-            "id": "gc-os-valentes-cacem",
-            "titulo": "Os Valentes",
+            "id": "shammah",
+            "titulo": "Shammah",
             "local": "Sintra - Cacém",
             "dia": "Sexta-feira",
             "hora": "20:00",
             "regiao": "sintra",
-            "imagem": "img/gc/os-valentes.jpg",
+            "imagem": "img/gc/shammah.jpg",
             "whatsapp": "351925677525",
             "descricao": "Grupo de Adultos e Casais"
         }
@@ -65,7 +65,7 @@ function carregarGrupos() {
     criarFiltrosDinamicos();
     
     // Renderizar grupos
-    renderizarGruposComAnimacao();
+    renderizarGrupos();
     
     // Inicializar observadores de animação
     inicializarObservadores();
@@ -137,7 +137,7 @@ function aplicarFiltro(regiao) {
     if (termoBusca) {
         aplicarBusca(termoBusca);
     } else {
-        renderizarGruposComAnimacao();
+        renderizarGrupos();
     }
 }
 
@@ -159,11 +159,11 @@ function aplicarBusca(termo) {
                grupo.descricao.toLowerCase().includes(termoLower);
     });
     
-    renderizarGruposComAnimacao();
+    renderizarGrupos();
 }
 
-// Renderizar grupos com animação especial para filtros
-function renderizarGruposComAnimacao() {
+// Renderizar grupos com animação cascata otimizada
+function renderizarGrupos() {
     const grid = document.getElementById('grupos-grid');
     
     if (gruposFiltrados.length === 0) {
@@ -179,14 +179,16 @@ function renderizarGruposComAnimacao() {
         return;
     }
     
-    // Adicionar classe para animação de filtro
-    grid.classList.add('filtering');
+    // Limpar grid primeiro
+    grid.innerHTML = '';
     
-    // Criar HTML com elementos inicialmente invisíveis
-    grid.innerHTML = gruposFiltrados.map((grupo, index) => `
-        <div class="grupo-card observe-section filter-animate" 
-             data-categoria="${grupo.regiao}" 
-             style="animation-delay: ${index * 0.08}s;">
+    // Criar e adicionar cards um por vez com classe cascade
+    gruposFiltrados.forEach((grupo, index) => {
+        const card = document.createElement('div');
+        card.className = 'grupo-card cascade';
+        card.setAttribute('data-categoria', grupo.regiao);
+        
+        card.innerHTML = `
             <!-- Imagem do card -->
             <div class="card-image" style="background-image: url('${grupo.imagem}');">
             </div>
@@ -228,16 +230,31 @@ function renderizarGruposComAnimacao() {
                     </a>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
+        
+        // Adicionar o card ao grid
+        grid.appendChild(card);
+        
+        // Forçar reflow para garantir que o DOM seja atualizado
+        card.offsetHeight;
+    });
     
-    // Remover classe de filtro após um tempo
+    // Iniciar animação cascata após um delay maior para estabilizar
     setTimeout(() => {
-        grid.classList.remove('filtering');
-    }, 100);
+        iniciarAnimacaoCascata();
+    }, 200);
+}
+
+// Função para iniciar a animação cascata com timing otimizado
+function iniciarAnimacaoCascata() {
+    const cards = document.querySelectorAll('.grupo-card.cascade');
     
-    // Reinicializar observadores após renderizar
-    inicializarObservadores();
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            // Adicionar classe visible para ativar a animação
+            card.classList.add('visible');
+        }, index * 200); // Delay maior (200ms) para animação mais suave
+    });
 }
 
 // Limpar todos os filtros
@@ -260,23 +277,23 @@ function limparFiltros() {
         botaoTodos.classList.add('active', 'bg-primary', 'text-white');
     }
     
-    renderizarGruposComAnimacao();
+    renderizarGrupos();
 }
 
 // Tornar função acessível globalmente
 window.limparFiltros = limparFiltros;
 
-// Inicializar observadores de animação
+// Inicializar observadores de animação para seções gerais (não cards)
 function inicializarObservadores() {
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Adicionar classe animate para ativar as animações em cascata
+                // Adicionar classe animate para ativar as animações
                 entry.target.classList.add('animate');
                 
                 // Remover o observador após a animação
@@ -285,24 +302,8 @@ function inicializarObservadores() {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.observe-section').forEach(section => {
-        // Garantir que os elementos comecem invisíveis mas não com visibility hidden
-        // Manter o conteúdo dos cards sempre visível
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        
-        // Garantir que os títulos sejam sempre visíveis
-        const titulo = section.querySelector('.grupo-titulo');
-        const descricao = section.querySelector('.grupo-descricao');
-        if (titulo) {
-            titulo.style.opacity = '1';
-            titulo.style.visibility = 'visible';
-        }
-        if (descricao) {
-            descricao.style.opacity = '1';
-            descricao.style.visibility = 'visible';
-        }
-        
+    // Observar apenas seções gerais (FAQ, CTA, etc.) - não cards
+    document.querySelectorAll('.observe-section:not(.animate)').forEach(section => {
         observer.observe(section);
     });
 }

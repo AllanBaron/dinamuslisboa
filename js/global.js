@@ -35,9 +35,12 @@ lazyImages.forEach(img => imageObserver.observe(img));
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
+            console.log('🎯 Seção visível:', entry.target);
+            
             // Use requestAnimationFrame for better performance
             requestAnimationFrame(() => {
                 entry.target.classList.add('fade-in-section');
+                console.log('✨ Adicionada classe fade-in-section para:', entry.target);
                 
                 // Trigger animations for child elements if they have specific delays
                 const childElements = entry.target.querySelectorAll('[style*="animation-delay"]');
@@ -48,6 +51,7 @@ const observer = new IntersectionObserver((entries) => {
                     setTimeout(() => {
                         child.style.opacity = '1';
                         child.style.transform = 'translateY(0)';
+                        console.log('🎬 Animação ativada para elemento filho:', child);
                     }, delayValue);
                 });
             });
@@ -57,8 +61,13 @@ const observer = new IntersectionObserver((entries) => {
 
 // Initialize observer when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.observe-section').forEach(section => {
+    // Observar todas as seções para animações
+    const observeSections = document.querySelectorAll('.observe-section');
+    console.log('🔍 Encontradas seções para observar:', observeSections.length);
+    
+    observeSections.forEach((section, index) => {
         observer.observe(section);
+        console.log(`📱 Observando seção ${index + 1}:`, section);
     });
 });
 
@@ -158,19 +167,167 @@ function debounce(func, wait) {
 // ========================================
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
+        // Carregar configuração de versão antes de registrar o SW
+        loadVersionConfig().then(config => {
+            if (config) {
+                console.log('Versão carregada:', config.version);
+                // Registrar SW com versão atual
+                return navigator.serviceWorker.register(`/sw.js?v=${config.version}`);
+            } else {
+                // Fallback para versão padrão
+                return navigator.serviceWorker.register('/sw.js?v=1.0.1');
+            }
+        }).then(registration => {
+            console.log('SW registrado com sucesso:', registration);
+            
+            // Verificar atualizações
+            registration.addEventListener('updatefound', () => {
+                console.log('Nova versão do Service Worker disponível');
             });
+        }).catch(registrationError => {
+            console.log('Falha no registro do SW:', registrationError);
+        });
     });
+    
+    // Escutar mensagens do Service Worker
+    navigator.serviceWorker.addEventListener('message', event => {
+        if (event.data && event.data.type === 'CACHE_UPDATED') {
+            console.log('Cache atualizado para versão:', event.data.version);
+            // Forçar recarregamento da página se necessário
+            if (confirm('Uma nova versão está disponível. Deseja recarregar a página?')) {
+                window.location.reload();
+            }
+        }
+    });
+}
+
+// ========================================
+// CONFIGURAÇÃO DE VERSÃO - Centralizada
+// ========================================
+let currentVersion = '1.0.1'; // Versão padrão
+let versionConfig = null;
+
+// Função para carregar configuração de versão
+async function loadVersionConfig() {
+    try {
+        const response = await fetch('/version.json');
+        const config = await response.json();
+        
+        currentVersion = config.version;
+        versionConfig = config;
+        
+        console.log('Configuração de versão carregada:', config);
+        
+        // Atualizar versões dos arquivos CSS e JS dinamicamente
+        updateResourceVersions(config);
+        
+        return config;
+    } catch (error) {
+        console.error('Erro ao carregar version.json, usando versão padrão:', error);
+        return null;
+    }
+}
+
+// Função para atualizar versões dos recursos
+function updateResourceVersions(config) {
+    // Atualizar CSS
+    const cssLink = document.querySelector('link[href*="styles.css"]');
+    if (cssLink) {
+        cssLink.href = `/css/styles.css?v=${config.version}`;
+    }
+    
+    // Atualizar JS (se necessário)
+    const jsScripts = document.querySelectorAll('script[src*=".js"]');
+    jsScripts.forEach(script => {
+        if (script.src.includes('global.js')) {
+            script.src = `/js/global.js?v=${config.version}`;
+        } else if (script.src.includes('main.js')) {
+            script.src = `/js/main.js?v=${config.version}`;
+        } else if (script.src.includes('mobile-menu.js')) {
+            script.src = `/js/mobile-menu.js?v=${config.version}`;
+        }
+    });
+}
+
+// Função para obter versão atual
+window.getCurrentVersion = function() {
+    return currentVersion;
+};
+
+// Função para obter configuração completa
+window.getVersionConfig = function() {
+    return versionConfig;
+};
+
+// ========================================
+// LIMPEZA DE CACHE - Funções manuais
+// ========================================
+window.clearAllCaches = async function() {
+    if ('caches' in window) {
+        try {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+            console.log('Todos os caches foram limpos');
+            
+            // Recarregar a página para aplicar mudanças
+            if (confirm('Cache limpo! Deseja recarregar a página?')) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Erro ao limpar cache:', error);
+        }
+    }
+};
+
+window.forceReload = function() {
+    // Forçar recarregamento sem cache
+    window.location.reload(true);
+};
+
+window.checkCacheVersion = async function() {
+    if ('caches' in window) {
+        try {
+            const cacheNames = await caches.keys();
+            console.log('Caches ativos:', cacheNames);
+            
+            // Obter versão atual do SW se disponível
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                const messageChannel = new MessageChannel();
+                messageChannel.port1.onmessage = event => {
+                    console.log('Versão do SW:', event.data);
+                    alert(`Caches ativos: ${cacheNames.join(', ')}\nVersão SW: ${event.data.version}`);
+                };
+                
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'GET_VERSION'
+                }, [messageChannel.port2]);
+            } else {
+                alert(`Caches ativos: ${cacheNames.join(', ')}\nVersão atual: ${currentVersion}`);
+            }
+        } catch (error) {
+            console.error('Erro ao verificar caches:', error);
+        }
+    }
+};
+
+// Adicionar botões de debug no console (apenas em desenvolvimento)
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    console.log('🔧 Funções de debug disponíveis:');
+    console.log('- clearAllCaches() - Limpa todos os caches');
+    console.log('- forceReload() - Recarrega a página forçadamente');
+    console.log('- checkCacheVersion() - Verifica versões dos caches');
+    console.log('- getCurrentVersion() - Retorna versão atual');
+    console.log('- getVersionConfig() - Retorna configuração completa');
 }
 
 // ========================================
 // API GLOBAL - Funções expostas para uso
 // ========================================
 window.GlobalUtils = {
-    debounce
+    debounce,
+    loadVersionConfig,
+    getCurrentVersion,
+    getVersionConfig
 }; 

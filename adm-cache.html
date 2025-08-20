@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpeza de Cache - Dinamus Lisboa</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #72473e, #374233);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            text-align: center;
+            color: #f2ebdb;
+            margin-bottom: 30px;
+        }
+        .cache-section {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn {
+            background: #f2ebdb;
+            color: #374233;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #e0d5c0;
+            transform: translateY(-2px);
+        }
+        .btn.danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn.danger:hover {
+            background: #c82333;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+        }
+        .status.success {
+            background: rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.5);
+        }
+        .status.error {
+            background: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.5);
+        }
+        .version-info {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .back-link a {
+            color: #f2ebdb;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #f2ebdb;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-link a:hover {
+            background: #f2ebdb;
+            color: #374233;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Administração de Cache</h1>
+        
+        <div class="version-info">
+            <h3>Informações da Versão</h3>
+            <p><strong>Versão Atual:</strong> <span id="current-version">Carregando...</span></p>
+            <p><strong>Data da Build:</strong> <span id="build-date">Carregando...</span></p>
+            <p><strong>Service Worker:</strong> <span id="sw-status">Verificando...</span></p>
+        </div>
+        
+        <div class="cache-section">
+            <h3>📋 Status do Cache</h3>
+            <button class="btn" onclick="checkCacheStatus()">Verificar Status</button>
+            <button class="btn" onclick="listAllCaches()">Listar Caches</button>
+            <div id="cache-status" class="status"></div>
+        </div>
+        
+        <div class="cache-section">
+            <h3>🧹 Limpeza de Cache</h3>
+            <button class="btn danger" onclick="clearAllCaches()">Limpar Todos os Caches</button>
+            <button class="btn" onclick="clearSpecificCache()">Limpar Cache Específico</button>
+            <button class="btn" onclick="forceReload()">Forçar Recarregamento</button>
+            <div id="clear-status" class="status"></div>
+        </div>
+        
+        <div class="cache-section">
+            <h3>🔄 Atualizações</h3>
+            <button class="btn" onclick="checkForUpdates()">Verificar Atualizações</button>
+            <button class="btn" onclick="updateServiceWorker()">Atualizar Service Worker</button>
+            <div id="update-status" class="status"></div>
+        </div>
+        
+        <div class="back-link">
+            <a href="index.html">← Voltar à Página Principal</a>
+        </div>
+    </div>
+
+    <script>
+        // Carregar informações de versão usando sistema centralizado
+        async function loadVersionInfo() {
+            try {
+                // Aguardar carregamento do global.js
+                if (typeof window.getCurrentVersion === 'function') {
+                    const version = window.getCurrentVersion();
+                    const config = window.getVersionConfig();
+                    
+                    if (config) {
+                        document.getElementById('current-version').textContent = config.version;
+                        document.getElementById('build-date').textContent = config.buildDate;
+                    } else {
+                        document.getElementById('current-version').textContent = version;
+                        document.getElementById('build-date').textContent = 'N/A';
+                    }
+                } else {
+                    // Fallback para carregamento direto se global.js não estiver disponível
+                    const response = await fetch('version.json');
+                    const data = await response.json();
+                    document.getElementById('current-version').textContent = data.version;
+                    document.getElementById('build-date').textContent = data.buildDate;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar informações de versão:', error);
+                document.getElementById('current-version').textContent = 'Erro ao carregar';
+                document.getElementById('build-date').textContent = 'Erro ao carregar';
+            }
+        }
+
+        // Carregar informações quando a página estiver pronta
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadVersionInfo);
+        } else {
+            loadVersionInfo();
+        }
+
+        // Verificar status do Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                if (registrations.length > 0) {
+                    document.getElementById('sw-status').textContent = 'Ativo (' + registrations.length + ' registro(s))';
+                } else {
+                    document.getElementById('sw-status').textContent = 'Não registrado';
+                }
+            });
+        } else {
+            document.getElementById('sw-status').textContent = 'Não suportado';
+        }
+
+        // Funções de administração
+        function checkCacheStatus() {
+            if ('caches' in window) {
+                caches.keys().then(cacheNames => {
+                    const statusDiv = document.getElementById('cache-status');
+                    if (cacheNames.length > 0) {
+                        statusDiv.className = 'status success';
+                        statusDiv.innerHTML = `<strong>✅ Caches ativos:</strong><br>${cacheNames.join('<br>')}`;
+                    } else {
+                        statusDiv.className = 'status';
+                        statusDiv.innerHTML = '<strong>ℹ️ Nenhum cache ativo</strong>';
+                    }
+                });
+            } else {
+                showStatus('cache-status', '❌ Cache API não suportada', 'error');
+            }
+        }
+
+        function listAllCaches() {
+            if ('caches' in window) {
+                caches.keys().then(cacheNames => {
+                    const statusDiv = document.getElementById('cache-status');
+                    if (cacheNames.length > 0) {
+                        let html = '<strong>📋 Caches encontrados:</strong><br>';
+                        cacheNames.forEach(name => {
+                            html += `• ${name}<br>`;
+                        });
+                        statusDiv.className = 'status success';
+                        statusDiv.innerHTML = html;
+                    } else {
+                        statusDiv.className = 'status';
+                        statusDiv.innerHTML = '<strong>ℹ️ Nenhum cache encontrado</strong>';
+                    }
+                });
+            }
+        }
+
+        async function clearAllCaches() {
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(
+                        cacheNames.map(cacheName => caches.delete(cacheName))
+                    );
+                    showStatus('clear-status', '✅ Todos os caches foram limpos com sucesso!', 'success');
+                    
+                    if (confirm('Cache limpo! Deseja recarregar a página?')) {
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    showStatus('clear-status', `❌ Erro ao limpar cache: ${error.message}`, 'error');
+                }
+            } else {
+                showStatus('clear-status', '❌ Cache API não suportada', 'error');
+            }
+        }
+
+        function clearSpecificCache() {
+            if ('caches' in window) {
+                caches.keys().then(cacheNames => {
+                    if (cacheNames.length > 0) {
+                        const cacheName = prompt('Digite o nome do cache a ser removido:', cacheNames[0]);
+                        if (cacheName && cacheNames.includes(cacheName)) {
+                            caches.delete(cacheName).then(() => {
+                                showStatus('clear-status', `✅ Cache "${cacheName}" removido com sucesso!`, 'success');
+                            });
+                        }
+                    } else {
+                        showStatus('clear-status', 'ℹ️ Nenhum cache para remover', 'error');
+                    }
+                });
+            } else {
+                showStatus('clear-status', '❌ Cache API não suportada', 'error');
+            }
+        }
+
+        function forceReload() {
+            if (confirm('Deseja forçar o recarregamento da página?')) {
+                window.location.reload(true);
+            }
+        }
+
+        function checkForUpdates() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration) {
+                        registration.update();
+                        showStatus('update-status', '🔄 Verificando atualizações...', 'success');
+                    } else {
+                        showStatus('update-status', '❌ Service Worker não registrado', 'error');
+                    }
+                });
+            }
+        }
+
+        function updateServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration) {
+                        registration.update();
+                        showStatus('update-status', '🔄 Service Worker atualizado!', 'success');
+                    }
+                });
+            }
+        }
+
+        function showStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${type}`;
+        }
+    </script>
+</body>
+</html>
