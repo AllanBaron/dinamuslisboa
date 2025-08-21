@@ -1,5 +1,5 @@
 // Service Worker com versionamento dinâmico baseado em version.json
-let CACHE_NAME = 'dinamus-lisboa-v1.0.1'; // Versão padrão
+let CACHE_NAME = 'dinamus-lisboa-v1.0.0'; // Versão padrão (será sobrescrita pelo version.json)
 let urlsToCache = [
   '/',
   '/index.html',
@@ -7,6 +7,7 @@ let urlsToCache = [
   '/js/global.js',
   '/js/main.js',
   '/js/mobile-menu.js',
+  '/js/update-checker.js',
   '/img/dnms-logo.png',
   '/img/encontros/culto.jpg',
   '/img/encontros/grupos-conexao.jpg',
@@ -26,22 +27,8 @@ async function loadVersionConfig() {
     // Atualizar nome do cache com versão atual
     CACHE_NAME = `dinamus-lisboa-v${config.version}`;
     
-    // Atualizar URLs com versões específicas
-    urlsToCache = urlsToCache.map(url => {
-      if (url.includes('/css/styles.css')) {
-        return `/css/styles.css?v=${config.version}`;
-      }
-      if (url.includes('/js/global.js')) {
-        return `/js/global.js?v=${config.version}`;
-      }
-      if (url.includes('/js/main.js')) {
-        return `/js/main.js?v=${config.version}`;
-      }
-      if (url.includes('/js/mobile-menu.js')) {
-        return `/js/mobile-menu.js?v=${config.version}`;
-      }
-      return url;
-    });
+    // URLs permanecem sem versões (sistema automático gerencia)
+    console.log('URLs de cache configuradas sem versões manuais');
     
     console.log('Configuração de versão carregada:', config);
     console.log('Cache atualizado para:', CACHE_NAME);
@@ -75,7 +62,8 @@ self.addEventListener('fetch', event => {
   if (event.request.url.includes('styles.css') || 
       event.request.url.includes('main.js') || 
       event.request.url.includes('global.js') ||
-      event.request.url.includes('mobile-menu.js')) {
+      event.request.url.includes('mobile-menu.js') ||
+      event.request.url.includes('update-checker.js')) {
     
     event.respondWith(
       fetch(event.request)

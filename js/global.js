@@ -175,7 +175,7 @@ if ('serviceWorker' in navigator) {
                 return navigator.serviceWorker.register(`/sw.js?v=${config.version}`);
             } else {
                 // Fallback para versão padrão
-                return navigator.serviceWorker.register('/sw.js?v=1.0.1');
+                return navigator.serviceWorker.register('/sw.js?v=1.0.0');
             }
         }).then(registration => {
             console.log('SW registrado com sucesso:', registration);
@@ -190,21 +190,13 @@ if ('serviceWorker' in navigator) {
     });
     
     // Escutar mensagens do Service Worker
-    navigator.serviceWorker.addEventListener('message', event => {
-        if (event.data && event.data.type === 'CACHE_UPDATED') {
-            console.log('Cache atualizado para versão:', event.data.version);
-            // Forçar recarregamento da página se necessário
-            if (confirm('Uma nova versão está disponível. Deseja recarregar a página?')) {
-                window.location.reload();
-            }
-        }
-    });
+
 }
 
 // ========================================
 // CONFIGURAÇÃO DE VERSÃO - Centralizada
 // ========================================
-let currentVersion = '1.0.1'; // Versão padrão
+let currentVersion = '1.0.0'; // Versão padrão (será sobrescrita pelo version.json)
 let versionConfig = null;
 
 // Função para carregar configuração de versão
@@ -218,8 +210,8 @@ async function loadVersionConfig() {
         
         console.log('Configuração de versão carregada:', config);
         
-        // Atualizar versões dos arquivos CSS e JS dinamicamente
-        updateResourceVersions(config);
+        // Sistema automático gerencia versões
+        console.log('Sistema automático de versões ativado');
         
         return config;
     } catch (error) {
@@ -228,26 +220,7 @@ async function loadVersionConfig() {
     }
 }
 
-// Função para atualizar versões dos recursos
-function updateResourceVersions(config) {
-    // Atualizar CSS
-    const cssLink = document.querySelector('link[href*="styles.css"]');
-    if (cssLink) {
-        cssLink.href = `/css/styles.css?v=${config.version}`;
-    }
-    
-    // Atualizar JS (se necessário)
-    const jsScripts = document.querySelectorAll('script[src*=".js"]');
-    jsScripts.forEach(script => {
-        if (script.src.includes('global.js')) {
-            script.src = `/js/global.js?v=${config.version}`;
-        } else if (script.src.includes('main.js')) {
-            script.src = `/js/main.js?v=${config.version}`;
-        } else if (script.src.includes('mobile-menu.js')) {
-            script.src = `/js/mobile-menu.js?v=${config.version}`;
-        }
-    });
-}
+
 
 // Função para obter versão atual
 window.getCurrentVersion = function() {
