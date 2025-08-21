@@ -102,23 +102,6 @@ class ConferenciaModal {
         setTimeout(() => {
             this.open();
         }, 5000);
-        
-        // Mostrar modal após scroll de 50% da página (opcional, para casos onde o modal foi fechado)
-        let hasShownOnScroll = false;
-        window.addEventListener('scroll', () => {
-            if (!hasShownOnScroll && !this.isOpen) {
-                const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-                if (scrollPercent > 50) {
-                    this.open();
-                    hasShownOnScroll = true;
-                }
-            }
-        });
-    }
-    
-    hasUserInteracted() {
-        // Verificar se o usuário já clicou, scrollou ou digitou
-        return sessionStorage.getItem('userInteracted') === 'true';
     }
     
     // Método público para abrir o modal programaticamente
@@ -136,13 +119,6 @@ class ConferenciaModal {
         return this.isOpen;
     }
 }
-
-// Marcar interação do usuário
-['click', 'scroll', 'keydown', 'touchstart'].forEach(event => {
-    document.addEventListener(event, () => {
-        sessionStorage.setItem('userInteracted', 'true');
-    }, { once: true });
-});
 
 // Inicializar modal quando DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
