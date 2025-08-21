@@ -221,6 +221,16 @@ function renderizarGrupos() {
                     </div>
                 </div>
                 
+                <!-- Frequência dos Encontros -->
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-value">Encontros quinzenais</div>
+                    </div>
+                </div>
+                
                 <!-- Botão WhatsApp -->
                 <div class="whatsapp-btn">
                     <a href="https://wa.me/${grupo.whatsapp}?text=Olá! Gostaria de saber mais sobre o grupo ${grupo.titulo}" 
