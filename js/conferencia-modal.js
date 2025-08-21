@@ -10,6 +10,8 @@ class ConferenciaModal {
         this.modalOverlay = document.getElementById('modalOverlay');
         this.closeButton = document.getElementById('closeModal');
         this.isOpen = false;
+        this.cookieName = 'conferenciaModalClosed';
+        this.cookieExpiryMinutes = 5; // Mudar para minutos
         
         this.init();
     }
@@ -48,6 +50,37 @@ class ConferenciaModal {
         });
     }
     
+    // Método para definir cookie
+    setCookie(name, value, minutes) { // Mudar parâmetro para minutes
+        const expires = new Date();
+        expires.setTime(expires.getTime() + (minutes * 60 * 1000)); // Calcular em minutos
+        document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+    
+    // Método para obter cookie
+    getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    
+    // Método para verificar se deve mostrar o modal
+    shouldShowModal() {
+        const cookieValue = this.getCookie(this.cookieName);
+        if (!cookieValue) return true;
+        
+        const closedTime = parseInt(cookieValue);
+        const currentTime = Date.now();
+        const minutesSinceClosed = (currentTime - closedTime) / (1000 * 60); // Calcular em minutos
+        
+        return minutesSinceClosed >= this.cookieExpiryMinutes; // Comparar com minutos
+    }
+    
     open() {
         if (this.isOpen) return;
         
@@ -55,11 +88,11 @@ class ConferenciaModal {
         this.modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         
-                    // Animar entrada com delay para suavizar
-            setTimeout(() => {
-                this.modalContent.classList.remove('scale-90', 'opacity-0');
-                this.modalContent.classList.add('scale-100', 'opacity-100');
-            }, 100);
+        // Animar entrada com delay para suavizar
+        setTimeout(() => {
+            this.modalContent.classList.remove('scale-90', 'opacity-0');
+            this.modalContent.classList.add('scale-100', 'opacity-100');
+        }, 100);
         
         // Adicionar classe para animação CSS
         this.modalContent.classList.add('modal-enter');
@@ -76,6 +109,9 @@ class ConferenciaModal {
         if (!this.isOpen) return;
         
         this.isOpen = false;
+        
+        // Definir cookie com timestamp atual
+        this.setCookie(this.cookieName, Date.now().toString(), this.cookieExpiryMinutes); // Usar minutos
         
         // Animar saída
         this.modalContent.classList.add('scale-90', 'opacity-0');
@@ -98,10 +134,13 @@ class ConferenciaModal {
     }
     
     setupAutoShow() {
-        // Mostrar modal automaticamente após 5 segundos
-        setTimeout(() => {
-            this.open();
-        }, 5000);
+        // Verificar se deve mostrar o modal baseado no cookie
+        if (this.shouldShowModal()) {
+            // Mostrar modal automaticamente após 5 segundos
+            setTimeout(() => {
+                this.open();
+            }, 5000);
+        }
     }
     
     // Método público para abrir o modal programaticamente
@@ -117,6 +156,11 @@ class ConferenciaModal {
     // Método para verificar se o modal está aberto
     isModalOpen() {
         return this.isOpen;
+    }
+    
+    // Método para limpar o cookie (útil para testes)
+    clearCookie() {
+        this.setCookie(this.cookieName, '', -1);
     }
 }
 
