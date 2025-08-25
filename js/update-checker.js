@@ -41,12 +41,7 @@ class UpdateChecker {
             
             // Verificar se há uma nova versão
             if (this.currentVersion && this.currentVersion !== this.latestVersion) {
-                console.log(`🔄 Nova versão encontrada: ${this.currentVersion} → ${this.latestVersion}`);
                 this.showUpdateModal();
-            } else if (!this.currentVersion) {
-                console.log(`📱 Primeira execução, versão: ${this.latestVersion}`);
-            } else {
-                console.log(`✅ Versão atual: ${this.currentVersion}`);
             }
         } catch (error) {
             console.error('Erro ao verificar atualizações:', error);
@@ -100,22 +95,17 @@ class UpdateChecker {
 
     async clearAllCaches() {
         try {
-            console.log('🧹 Iniciando limpeza completa de caches...');
-            
             // 1. Limpar cache do Service Worker
             if ('serviceWorker' in navigator) {
                 const registrations = await navigator.serviceWorker.getRegistrations();
-                console.log(`📱 Service Workers encontrados: ${registrations.length}`);
                 for (let registration of registrations) {
                     await registration.unregister();
-                    console.log('🗑️ Service Worker removido:', registration.scope);
                 }
             }
 
             // 2. Limpar caches do navegador (incluindo JS, CSS e imagens)
             if ('caches' in window) {
                 const cacheNames = await caches.keys();
-                console.log(`💾 Caches encontrados: ${cacheNames.length}`);
                 
                 for (let cacheName of cacheNames) {
                     const cache = await caches.open(cacheName);
@@ -130,39 +120,31 @@ class UpdateChecker {
                         if (url.includes('.jpg') || url.includes('.png') || url.includes('.webp') || url.includes('.gif')) imgCount++;
                     }
                     
-                    console.log(`📊 Cache ${cacheName}: ${jsCount} JS, ${cssCount} CSS, ${imgCount} imagens`);
                     await caches.delete(cacheName);
                 }
-                console.log('✅ Todos os caches do navegador foram limpos');
             }
 
             // 3. Limpar localStorage (exceto a versão)
             const version = localStorage.getItem('dinamus_version');
             const localStorageKeys = Object.keys(localStorage);
-            console.log(`💾 localStorage: ${localStorageKeys.length} itens encontrados`);
             localStorage.clear();
             if (version) {
                 localStorage.setItem('dinamus_version', version);
-                console.log('💾 Versão preservada no localStorage');
             }
 
             // 4. Limpar sessionStorage
             const sessionStorageKeys = Object.keys(sessionStorage);
-            console.log(`💾 sessionStorage: ${sessionStorageKeys.length} itens encontrados`);
             sessionStorage.clear();
 
             // 5. Forçar recarregamento de recursos
             this.forceResourceReload();
             
-            console.log('🎉 Limpeza completa de caches concluída com sucesso!');
         } catch (error) {
             console.error('❌ Erro ao limpar caches:', error);
         }
     }
 
     forceResourceReload() {
-        console.log('🔄 Forçando recarregamento de recursos...');
-        
         // 1. Forçar recarregamento de CSS
         const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
         let cssUpdated = 0;
@@ -171,10 +153,8 @@ class UpdateChecker {
                 const originalHref = link.href.split('?')[0];
                 link.href = `${originalHref}?v=${this.latestVersion}&t=${Date.now()}`;
                 cssUpdated++;
-                console.log(`🎨 CSS atualizado: ${originalHref}`);
             }
         });
-        console.log(`✅ ${cssUpdated} arquivos CSS foram atualizados`);
         
         // 2. Forçar recarregamento de JavaScript
         const jsScripts = document.querySelectorAll('script[src]');
@@ -184,10 +164,8 @@ class UpdateChecker {
                 const originalSrc = script.src.split('?')[0];
                 script.src = `${originalSrc}?v=${this.latestVersion}&t=${Date.now()}`;
                 jsUpdated++;
-                console.log(`⚡ JavaScript atualizado: ${originalSrc}`);
             }
         });
-        console.log(`✅ ${jsUpdated} arquivos JavaScript foram atualizados`);
         
         // 3. Forçar recarregamento de imagens (se necessário)
         const images = document.querySelectorAll('img[src*="img/"]');
@@ -199,16 +177,12 @@ class UpdateChecker {
                 imgUpdated++;
             }
         });
-        console.log(`✅ ${imgUpdated} imagens foram atualizadas`);
-        
-        console.log('🎯 Recarregamento de recursos concluído');
     }
 
     saveCurrentVersion() {
         if (this.latestVersion) {
             localStorage.setItem('dinamus_version', this.latestVersion);
             this.currentVersion = this.latestVersion;
-            console.log(`💾 Versão salva no localStorage: ${this.latestVersion}`);
         }
     }
 
@@ -226,17 +200,15 @@ class UpdateChecker {
 document.addEventListener('DOMContentLoaded', function() {
     window.updateChecker = new UpdateChecker();
     
-    // Escutar mensagens do Service Worker para atualizações
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.addEventListener('message', event => {
-            if (event.data && event.data.type === 'CACHE_UPDATED') {
-                console.log('🔄 Cache atualizado para versão:', event.data.version);
-                
-                // Verificar se há nova versão disponível
-                if (window.updateChecker) {
-                    window.updateChecker.checkForUpdates();
+            // Escutar mensagens do Service Worker para atualizações
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data && event.data.type === 'CACHE_UPDATED') {
+                    // Verificar se há nova versão disponível
+                    if (window.updateChecker) {
+                        window.updateChecker.checkForUpdates();
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 });

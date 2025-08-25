@@ -28,19 +28,16 @@ function initializeVideoManagement() {
     
     // Tentar reproduzir o vídeo
     video.play().catch(error => {
-        console.log('Autoplay falhou, mostrando fallback:', error.message);
         videoFallback.classList.remove('hidden');
     });
     
     // Verificar se o vídeo carregou
     video.addEventListener('loadeddata', () => {
-        console.log('Vídeo carregou com sucesso');
         videoFallback.classList.add('hidden');
     });
     
     // Fallback em caso de erro
     video.addEventListener('error', () => {
-        console.log('Erro no vídeo, mostrando fallback');
         videoFallback.classList.remove('hidden');
     });
 }

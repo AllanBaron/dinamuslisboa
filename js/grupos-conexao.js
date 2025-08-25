@@ -59,8 +59,6 @@ function carregarGrupos() {
     todosGrupos = dadosEstaticos.grupos;
     gruposFiltrados = [...todosGrupos];
     
-    console.log('✅ Dados carregados dos dados estáticos');
-    
     // Criar filtros dinâmicos baseados nas regiões disponíveis
     criarFiltrosDinamicos();
     
