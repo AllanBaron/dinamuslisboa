@@ -7,7 +7,7 @@
     
     <!-- Headers de Segurança Simples -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
+
     
     <style>
         * {
@@ -131,20 +131,6 @@
             opacity: 1;
         }
         
-        .mbway-display {
-            background: #f8f5f0;
-            border: 2px solid #374233;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            font-family: 'Arial', sans-serif;
-            font-size: 18px;
-            font-weight: 600;
-            color: #374233;
-            letter-spacing: 1px;
-            user-select: text;
-        }
-        
         .security-notice {
             font-size: 12px;
             color: #666;
@@ -190,16 +176,6 @@
             <div class="success-message" id="successMessage">IBAN copiado com sucesso!</div>
         </div>
         
-        <!-- Seção do MB WAY -->
-        <!-- <div class="iban-section">
-            <h1 class="iban-title">MB WAY para Pagamento</h1>
-            <div class="mbway-display" id="mbwayDisplay">+351 912 345 678</div>
-            <button class="copy-btn" id="copyMbwayBtn" onclick="copyMbway()">
-                <i class="fas fa-copy"></i>
-                Copiar Número
-            </button>
-            <div class="success-message" id="mbwaySuccessMessage">MB WAY copiado com sucesso!</div>
-        </div> -->
         
         <!-- Botão para ir ao site -->
         <a href="https://dinamuslisboa.pt" class="site-btn">
@@ -217,8 +193,7 @@
         // IBAN fixo - ALTERE AQUI
         const IBAN = 'PT50 0023 0000 45717538317 94';
         
-        // Número MB WAY fixo - ALTERE AQUI
-        const MBWAY = '+351 912 345 678';
+
         
         // Função simples para copiar
         function copyIBAN() {
@@ -245,30 +220,7 @@
             });
         }
         
-        // Função para copiar MB WAY
-        function copyMbway() {
-            const copyMbwayBtn = document.getElementById('copyMbwayBtn');
-            const mbwaySuccessMessage = document.getElementById('mbwaySuccessMessage');
-            
-            // Copiar número MB WAY fixo
-            navigator.clipboard.writeText(MBWAY).then(function() {
-                // Feedback visual
-                mbwaySuccessMessage.classList.add('show');
-                copyMbwayBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                copyMbwayBtn.classList.add('copied');
-                
-                // Reset após 3 segundos
-                setTimeout(function() {
-                    mbwaySuccessMessage.classList.remove('show');
-                    copyMbwayBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar Número';
-                    copyMbwayBtn.classList.remove('copied');
-                }, 3000);
-                
-            }).catch(function(err) {
-                console.error('Erro ao copiar: ', err);
-                alert('Erro ao copiar o número. Tente novamente.');
-            });
-        }
+
         
         // Proteção simples: sempre mostrar o IBAN correto
         function ensureCorrectIBAN() {
@@ -281,21 +233,11 @@
         // Verificar a cada segundo (simples e eficaz)
         setInterval(ensureCorrectIBAN, 1000);
         
-        // Proteção para MB WAY: sempre mostrar o número correto
-        function ensureCorrectMbway() {
-            const mbwayElement = document.getElementById('mbwayDisplay');
-            if (mbwayElement.textContent !== MBWAY) {
-                mbwayElement.textContent = MBWAY;
-            }
-        }
-        
-        // Verificar MB WAY a cada segundo
-        setInterval(ensureCorrectMbway, 1000);
+
         
         // Verificar ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
             ensureCorrectIBAN();
-            ensureCorrectMbway();
         });
         
         // Proteção básica contra clique direito
