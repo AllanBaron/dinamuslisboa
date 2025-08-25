@@ -1,0 +1,8 @@
+# Permite que todos os robôs de busca acessem todo o site.
+User-agent: *
+Allow: /
+Disallow: /dizimos-e-ofertas.html
+Disallow: /cache.html
+
+# (Opcional, mas muito recomendado) Localização do seu sitemap.
+Sitemap: https://dinamuslisboa.pt/sitemap.xml
