@@ -3,126 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Cache Control -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- Theme and Color -->
+    <meta name="theme-color" content="#f2ebdb">
+    <meta name="color-scheme" content="dark">
+    <meta name="msapplication-TileColor" content="#f2ebdb">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dinamuslisboa.pt/dizimos-e-ofertas">
+    <meta property="og:title" content="Dízimos e Ofertas - Dinamus Lisboa">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://dinamuslisboa.pt/img/dnms.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Logo Dinamus Lisboa">
+    <meta property="og:site_name" content="Dinamus Lisboa">
+    <meta property="og:locale" content="pt_PT">
+    
+    <!-- WhatsApp Specific Meta Tags -->
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:secure_url" content="https://dinamuslisboa.pt/img/dnms.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dinamuslisboa.pt/dizimos-e-ofertas">
+    <meta property="twitter:title" content="Dízimos e Ofertas - Dinamus Lisboa">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://dinamuslisboa.pt/img/dnms.jpg">
+    <meta property="twitter:image:alt" content="Logo Dinamus Lisboa">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dinamuslisboa.pt/dizimos-e-ofertas">
+    
+    <!-- Title -->
     <title>Dízimos e Ofertas - Dinamus Lisboa</title>
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" as="style">
+    
+    <!-- DNS prefetch para recursos externos -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+    
+    <!-- Tailwind CSS via Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts com display=swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome com defer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon/favicon.ico">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/img/favicon/android-chrome-512x512.png">
     
     <!-- Headers de Segurança Simples -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* Apenas estilos que não podem ser substituídos pelo Tailwind */
         body {
-            background-color: #f2ebdb;
-            color: #374233;
             font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .container {
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-        }
-        
-        .logo {
-            margin-bottom: 40px;
-            margin-top: 20px;
-            margin-left: 20px;
-        }
-        
-        .logo img {
-            height: 100px;
-            width: auto;
-        }
-        
-        .iban-section {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
-        }
-        
-        .iban-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: #374233;
         }
         
         .iban-display {
-            background: #f8f5f0;
-            border: 2px solid #374233;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
             font-family: 'Courier New', monospace;
-            font-size: 18px;
-            font-weight: 600;
-            color: #374233;
-            letter-spacing: 2px;
             user-select: text;
-        }
-        
-        .copy-btn {
-            background: #374233;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .copy-btn:hover {
-            background: #2a3327;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(55, 66, 51, 0.3);
         }
         
         .copy-btn.copied {
             background: #28a745;
         }
         
-        .site-btn {
-            background: transparent;
-            color: #374233;
-            border: 2px solid #374233;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .site-btn:hover {
-            background: #374233;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(55, 66, 51, 0.3);
-        }
-        
         .success-message {
-            color: #28a745;
-            font-size: 14px;
-            margin-top: 10px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -130,130 +103,39 @@
         .success-message.show {
             opacity: 1;
         }
-        
-        .security-notice {
-            font-size: 12px;
-            color: #666;
-            margin-top: 20px;
-            padding: 10px;
-            background: #f8f5f0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .iban-section {
-                padding: 30px 20px;
-            }
-            
-            .iban-display {
-                font-size: 16px;
-                letter-spacing: 1px;
-                padding: 15px;
-            }
-        }
     </style>
 </head>
-<body>
-    <div class="container">
+<body class="m-0 p-0 box-border bg-[#f2ebdb] text-[#374233] flex flex-col items-center justify-center p-5">
+    <div class="text-center max-w-[500px] w-full px-4 md:px-0">
         <!-- Logo -->
-        <div class="logo">
-            <img src="img/logo-visao.png" alt="Logo Dinamus Lisboa">
+        <div class="mb-10 mt-5 ml-5 flex justify-center">
+            <img src="img/logo-visao.png" alt="Logo Dinamus Lisboa" class="h-[100px] w-auto">
         </div>
         
         <!-- Seção de Dízimos e Ofertas -->
-        <div class="iban-section">
-            <h1 class="iban-title">IBAN para Transferência</h1>
-            <div class="iban-display" id="ibanDisplay">PT50 0000 0000 0000 0000 0000 0</div>
-            <button class="copy-btn" id="copyBtn" onclick="copyIBAN()">
+        <div class="bg-white p-8 md:p-10 rounded-[15px] shadow-[0_4px_20px_rgba(0,0,0,0.1)] mb-10">
+            <h1 class="text-xl md:text-2xl font-semibold mb-5 text-[#374233]">IBAN para Transferência</h1>
+            <div class="bg-[#f8f5f0] border-2 border-[#374233] rounded-[10px] p-4 md:p-5 mb-6 text-base md:text-lg font-semibold text-[#374233] tracking-[0.1px] iban-display" id="ibanDisplay">PT50 0000 0000 0000 0000 0000 0</div>
+            <button class="bg-[#374233] text-white border-none py-3 px-6 md:py-4 md:px-8 rounded-[25px] text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 ease-in-out inline-flex items-center gap-2.5 hover:bg-[#2a3327] hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(55,66,51,0.3)] copy-btn" id="copyBtn" onclick="copyIBAN()">
                 <i class="fas fa-copy"></i>
                 Copiar IBAN
             </button>
-            <div class="success-message" id="successMessage">IBAN copiado com sucesso!</div>
+            <div class="text-[#28a745] text-sm mt-2.5 success-message" id="successMessage">IBAN copiado com sucesso!</div>
         </div>
-        
-        
-        <!-- Botão para ir ao site -->
-        <a href="https://dinamuslisboa.pt" class="site-btn">
-          <i class="fas fa-home"></i>
-          Visitar nosso site
+    </div>
+
+    <!-- Botão para ir ao site -->
+    <div class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 w-full flex justify-center">
+        <a href="https://dinamuslisboa.pt" class="bg-transparent text-[#374233] border-2 border-[#374233] py-4 px-8 rounded-[25px] text-base font-semibold cursor-pointer transition-all duration-300 ease-in-out no-underline inline-block hover:bg-[#374233] hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(55,66,51,0.3)] site-btn">
+            <i class="fas fa-home mr-1"></i>
+            Visitar nosso site
         </a>
     </div>
 
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <script>
-        'use strict';
-        
-        // IBAN fixo - ALTERE AQUI
-        const IBAN = 'PT50 0023 0000 45717538317 94';
-        
-
-        
-        // Função simples para copiar
-        function copyIBAN() {
-            const copyBtn = document.getElementById('copyBtn');
-            const successMessage = document.getElementById('successMessage');
-            
-            // Copiar IBAN fixo (não o conteúdo do DOM)
-            navigator.clipboard.writeText(IBAN).then(function() {
-                // Feedback visual
-                successMessage.classList.add('show');
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                copyBtn.classList.add('copied');
-                
-                // Reset após 3 segundos
-                setTimeout(function() {
-                    successMessage.classList.remove('show');
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar IBAN';
-                    copyBtn.classList.remove('copied');
-                }, 3000);
-                
-            }).catch(function(err) {
-                console.error('Erro ao copiar: ', err);
-                alert('Erro ao copiar o IBAN. Tente novamente.');
-            });
-        }
-        
-
-        
-        // Proteção simples: sempre mostrar o IBAN correto
-        function ensureCorrectIBAN() {
-            const ibanElement = document.getElementById('ibanDisplay');
-            if (ibanElement.textContent !== IBAN) {
-                ibanElement.textContent = IBAN;
-            }
-        }
-        
-        // Verificar a cada segundo (simples e eficaz)
-        setInterval(ensureCorrectIBAN, 1000);
-        
-
-        
-        // Verificar ao carregar a página
-        document.addEventListener('DOMContentLoaded', function() {
-            ensureCorrectIBAN();
-        });
-        
-        // Proteção básica contra clique direito
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        
-        // Proteção básica contra teclas de debug
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                (e.ctrlKey && e.key === 'u')) {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="js/dizimos-e-ofertas.js"></script>
     
     <!-- Script de Verificação de Atualizações -->
     <script src="js/update-checker.js"></script>
