@@ -76,7 +76,7 @@ function loadMap() {
     const googleMap = document.getElementById('google-map');
     
     if (mapPlaceholder && googleMap) {
-        googleMap.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.012535180699!2d-9.303656799999999!3d38.763416500000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1ece3f83ee0c79%3A0xf7a26d60b3ac74aa!2sR.%20da%20Bela%20Vista%2025%2C%202735-521%20Agualva-Cac%C3%A9m%2C%20Portugal!5e0!3m2!1spt-BR!2sbr!4v1752882291142!5m2!1spt-BR!2sbr";
+        googleMap.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.009750422166!2d-9.305894724410086!3d38.763480371753005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1ecf156303225d%3A0xd9ffa1bc5d2b8af!2sIgreja%20Dinamus%20Lisboa!5e0!3m2!1spt-PT!2spt!4v1756337604654!5m2!1spt-PT!2spt";
         mapPlaceholder.classList.add('hidden');
         googleMap.classList.remove('hidden');
     }
@@ -84,9 +84,7 @@ function loadMap() {
 
 // Função para abrir Google Maps
 function openGoogleMaps() {
-    const address = "R. da Bela Vista, 25, Cacém, Portugal";
-    const encodedAddress = encodeURIComponent(address);
-    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+    const mapsUrl = 'https://maps.app.goo.gl/E4L5HBGQN656LN7w9';
     window.open(mapsUrl, '_blank');
 }
 
