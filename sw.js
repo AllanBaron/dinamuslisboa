@@ -1,21 +1,31 @@
 // Service Worker com versionamento dinâmico baseado em version.json
-let CACHE_NAME = 'dinamus-lisboa-v1.0.0'; // Versão padrão (será sobrescrita pelo version.json)
+let CACHE_NAME = 'dinamus-lisboa-v2.2.0'; // Versão padrão (será sobrescrita pelo version.json)
 let urlsToCache = [
   '/',
   '/index.html',
-  '/css/styles.css',
-  '/js/global.js',
-  '/js/main.js',
-  '/js/mobile-menu.js',
-  '/js/update-checker.js',
+  '/grupos-conexao.html',
+  '/css/styles-min.css',
+  '/js/script.min.js',
   '/img/dnms-logo.png',
+  '/img/favicon/favicon.ico',
+  '/img/encontros/culto.webp',
   '/img/encontros/culto.jpg',
+  '/img/encontros/grupos-conexao.webp',
   '/img/encontros/grupos-conexao.jpg',
+  '/img/encontros/sala-de-oracao.webp',
   '/img/encontros/sala-de-oracao.jpg',
+  '/img/encontros/hangout.webp',
   '/img/encontros/hangout.jpg',
+  '/img/gc/huios.webp',
+  '/img/gc/huios.jpg',
+  '/img/gc/ekballo.webp',
+  '/img/gc/ekballo.jpg',
+  '/img/gc/os-valentes.webp',
+  '/img/gc/os-valentes.jpg',
+  '/img/gc/shammah.webp',
+  '/img/gc/shammah.jpg',
   'https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
-  'https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
 ];
 
 // Função para carregar configurações de versão
@@ -27,31 +37,21 @@ async function loadVersionConfig() {
     // Atualizar nome do cache com versão atual
     CACHE_NAME = `dinamus-lisboa-v${config.version}`;
     
-    // URLs permanecem sem versões (sistema automático gerencia)
-    console.log('URLs de cache configuradas sem versões manuais');
-    
-    console.log('Configuração de versão carregada:', config);
-    console.log('Cache atualizado para:', CACHE_NAME);
-    
     return config;
   } catch (error) {
-    console.error('Erro ao carregar version.json, usando configuração padrão:', error);
     return null;
   }
 }
 
 // Install event - cache resources
 self.addEventListener('install', event => {
-  console.log('Service Worker instalando...');
   event.waitUntil(
     loadVersionConfig().then(() => {
-      console.log('Instalando nova versão:', CACHE_NAME);
       return caches.open(CACHE_NAME);
     }).then(cache => {
-      console.log('Cache aberto:', CACHE_NAME);
       return cache.addAll(urlsToCache);
     }).catch(error => {
-      console.error('Erro ao instalar cache:', error);
+      // Erro silencioso para produção
     })
   );
 });
@@ -59,7 +59,7 @@ self.addEventListener('install', event => {
 // Fetch event - serve from cache when offline
 self.addEventListener('fetch', event => {
   // Forçar atualização de recursos críticos
-  if (event.request.url.includes('styles.css') || 
+  if (event.request.url.includes('styles-min.css') || 
       event.request.url.includes('main.js') || 
       event.request.url.includes('global.js') ||
       event.request.url.includes('mobile-menu.js') ||
@@ -93,13 +93,11 @@ self.addEventListener('fetch', event => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
-  console.log('Service Worker ativando nova versão:', CACHE_NAME);
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Deletando cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })

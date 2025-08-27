@@ -1,3 +1,8 @@
+/* Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* CSS crítico inline para renderização mais rápida */
 body {
     background-color: #121212;
@@ -369,15 +374,6 @@ body {
 /* Fallback para imagens que não carregam */
 .grupo-card .card-image:not([style*="background-image"]) {
     background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.grupo-card .card-image:not([style*="background-image"])::after {
-    content: '📷';
-    font-size: 3rem;
-    opacity: 0.5;
 }
 
 /* Melhorar a legibilidade do texto sobre as imagens */

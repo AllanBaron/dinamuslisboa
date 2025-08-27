@@ -149,7 +149,7 @@ class UpdateChecker {
         const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
         let cssUpdated = 0;
         cssLinks.forEach(link => {
-            if (link.href.includes('css/') || link.href.includes('styles.css')) {
+            if (link.href.includes('css/') || link.href.includes('styles-min.css')) {
                 const originalHref = link.href.split('?')[0];
                 link.href = `${originalHref}?v=${this.latestVersion}&t=${Date.now()}`;
                 cssUpdated++;

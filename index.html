@@ -6,21 +6,12 @@
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="Dinamus Lisboa - Junte-se a nós em nossos encontros semanais, grupos de conexão e sala de oração. Localizada na Rua da Bela Vista, 25 - Cacém, Sintra.">
-    <meta name="keywords" content="igreja, dinamus, lisboa, cacém, sintra, culto, grupos de conexão, oração, cristianismo, fé, comunidade">
     <meta name="author" content="Dinamus Lisboa">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="Portuguese">
-    <meta name="revisit-after" content="7 days">
-    
-    <!-- Cache Control -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     
     <!-- Theme and Color -->
     <meta name="theme-color" content="#000000">
     <meta name="color-scheme" content="dark">
-    <meta name="msapplication-TileColor" content="#000000">
     
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
@@ -33,10 +24,6 @@
     <meta property="og:image:alt" content="Logo Dinamus Lisboa">
     <meta property="og:site_name" content="Dinamus Lisboa">
     <meta property="og:locale" content="pt_PT">
-    
-    <!-- WhatsApp Specific Meta Tags -->
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:secure_url" content="https://dinamuslisboa.pt/img/dnms.jpg">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -52,64 +39,51 @@
     <!-- Title -->
     <title>Bem-vindo à Dinamus Lisboa</title>
     
-    <!-- Preload de recursos críticos -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" as="style">
-    
     <!-- DNS prefetch para recursos externos -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="//maps.googleapis.com">
-    <link rel="dns-prefetch" href="//images.pexels.com">
-    
-    <!-- Tailwind CSS via Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts com display=swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome com defer -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <!-- Font Awesome otimizado - carregamento assíncrono -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="/img/favicon/favicon.ico">
-
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-
     <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/img/favicon/android-chrome-512x512.png">
 
-    <!-- CSS externo -->
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS otimizado -->
+    <link rel="stylesheet" href="css/styles-min.css">
 </head>
 <body class="antialiased">
 
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center" id="navbar">
         <div class="container max-w-[1300px] mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#">
-                <img src="img/dnms-logo.png" alt="Logo Dinamus Lisboa" class="h-10" loading="eager">
+            <a href="#" aria-label="Ir para o início">
+                <img src="img/dnms-logo.png" alt="Logo Dinamus Lisboa" class="h-10" loading="eager" width="120" height="40">
             </a>
             <nav class="hidden md:flex items-center space-x-6">
                 <a href="#hero" class="text-white hover:text-gray-300 transition-colors">Dinamus Lisboa</a>
                 <a href="#encontros" class="text-white hover:text-gray-300 transition-colors">Encontros</a>
                 <a href="/grupos-conexao" class="text-white hover:text-gray-300 transition-colors">Grupos de Conexão</a>
                 <a href="#visite" class="text-white hover:text-gray-300 transition-colors">Visite-nos</a>
-                <button id="showConferenciaModal" class="bg-transparent hover:bg-white hover:bg-white hover:bg-opacity-10 text-white px-3 py-1.5 rounded-md transition-all duration-200 font-medium border border-white border-opacity-50 hover:border-opacity-100">
+                <button id="showConferenciaModal" class="bg-transparent hover:bg-white hover:bg-white hover:bg-opacity-10 text-white px-3 py-1.5 rounded-md transition-all duration-200 font-medium border border-white border-opacity-50 hover:border-opacity-100" aria-label="Abrir informações sobre a conferência">
                     <i class="fas fa-calendar-alt mr-2"></i>Conferência
                 </button>
-                <a href="https://www.instagram.com/igrejadinamus.lisboa" target="_blank" class="text-white hover:text-gray-300 transition-colors">
+                <a href="https://www.instagram.com/igrejadinamus.lisboa" target="_blank" class="text-white hover:text-gray-300 transition-colors" aria-label="Siga-nos no Instagram">
                     <i class="fab fa-instagram text-lg mt-0.5"></i>
                 </a>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none relative z-50" aria-label="Menu">
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none relative z-50" aria-label="Abrir menu de navegação">
                 <div class="hamburger-menu">
                     <span class="hamburger-line"></span>
                     <span class="hamburger-line"></span>
@@ -133,11 +107,11 @@
                 <a href="#visite" class="mobile-menu-link text-xl text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-105 relative">
                     Visite-nos
                 </a>
-                <button id="showConferenciaModalMobile" class="mobile-menu-link text-xl text-white hover:text-red-300 transition-all duration-300 transform hover:scale-105 relative">
+                <button id="showConferenciaModalMobile" class="mobile-menu-link text-xl text-white hover:text-red-300 transition-all duration-300 transform hover:scale-105 relative" aria-label="Abrir informações sobre a conferência">
                     <i class="fas fa-calendar-alt mr-2"></i>Conferência
                 </button>
                 <div class="pt-8">
-                    <a href="https://www.instagram.com/igrejadinamus.lisboa" target="_blank" class="mobile-menu-link text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-110 relative">
+                    <a href="https://www.instagram.com/igrejadinamus.lisboa" target="_blank" class="mobile-menu-link text-white hover:text-[#f2ebdb] transition-all duration-300 transform hover:scale-110 relative" aria-label="Siga-nos no Instagram">
                         <i class="fab fa-instagram text-3xl"></i>
                     </a>
                 </div>
@@ -156,13 +130,13 @@
         -->
         <video autoplay loop muted playsinline id="hero-video" preload="metadata" class="w-full h-full object-cover" webkit-playsinline>
             <!-- WebM como formato principal (melhor compressão e qualidade) -->
-            <source src="video/hero.webm" type="video/webm" media="(min-width: 1024px)">
-            <source src="video/hero.webm" type="video/webm" media="(min-width: 768px)">
+            <source src="video/hero-mobile.webm" type="video/webm" media="(min-width: 1024px)">
+            <source src="video/hero-mobile.webm" type="video/webm" media="(min-width: 768px)">
             <source src="video/hero-mobile.webm" type="video/webm">
             
             <!-- MP4 como fallback para navegadores que não suportam WebM -->
-            <source src="video/hero.mp4" type="video/mp4" media="(min-width: 1024px)">
-            <source src="video/hero.mp4" type="video/mp4" media="(min-width: 768px)">
+            <source src="video/hero-mobile.mp4" type="video/mp4" media="(min-width: 1024px)">
+            <source src="video/hero-mobile.mp4" type="video/mp4" media="(min-width: 768px)">
             <source src="video/hero-mobile.mp4" type="video/mp4">
         </video>
         
@@ -183,7 +157,7 @@
             </div>
         </div>
         <div class="absolute bottom-10 z-10 animate-bounce">
-            <a href="#encontros"><i class="fas fa-chevron-down text-2xl text-white"></i></a>
+            <a href="#encontros" aria-label="Ver os nossos encontros"><i class="fas fa-chevron-down text-2xl text-white"></i></a>
         </div>
     </section>
 
@@ -203,10 +177,17 @@
                 <div class="flex gap-14 text-white justify-center flex-col md:flex-row flex-wrap items-center">
                     <!-- CULTO CARD -->
                     <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]">
-                        <img src="img/encontros/culto.jpg" 
-                             alt="Culto" 
-                             class="absolute inset-0 w-full h-full object-cover"
-                             loading="eager">
+                        <picture>
+                            <!-- WebP para navegadores modernos -->
+                            <source srcset="img/encontros/culto.webp" type="image/webp">
+                            <!-- JPEG como fallback -->
+                            <img src="img/encontros/culto.jpg" 
+                                 alt="Culto dominical da Dinamus Lisboa" 
+                                 class="absolute inset-0 w-full h-full object-cover"
+                                 loading="lazy"
+                                 width="300"
+                                 height="350">
+                        </picture>
                         <div class="card-content p-6 text-left w-full">
                             <h3 class="font-display text-3xl">Culto</h3>
                             <p class="font-bold text-lg">Todos os Domingos | 10:30</p>
@@ -219,10 +200,17 @@
 
                     <!-- GRUPOS CARD -->
                     <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]" style="animation-delay: 0.2s;">
-                        <img src="img/encontros/grupos-conexao.jpg" 
-                             alt="Grupos de Conexão" 
-                             class="absolute inset-0 w-full h-full object-cover"
-                             loading="eager">
+                        <picture>
+                            <!-- WebP para navegadores modernos -->
+                            <source srcset="img/encontros/grupos-conexao.webp" type="image/webp">
+                            <!-- JPEG como fallback -->
+                            <img src="img/encontros/grupos-conexao.jpg" 
+                                 alt="Grupos de Conexão da Dinamus Lisboa" 
+                                 class="absolute inset-0 w-full h-full object-cover"
+                                 loading="lazy"
+                                 width="300"
+                                 height="350">
+                        </picture>
                         <div class="card-content p-6 text-left w-full">
                             <h3 class="font-display text-3xl">GC</h3>
                             <p class="font-bold text-lg">Encontros Quinzenais</p>
@@ -235,10 +223,17 @@
 
                     <!-- ORAÇÃO CARD -->
                     <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]" style="animation-delay: 0.4s;">
-                        <img src="img/encontros/sala-de-oracao.jpg" 
-                             alt="Sala de Oração" 
-                             class="absolute inset-0 w-full h-full object-cover"
-                             loading="eager">
+                        <picture>
+                            <!-- WebP para navegadores modernos -->
+                            <source srcset="img/encontros/sala-de-oracao.webp" type="image/webp">
+                            <!-- JPEG como fallback -->
+                            <img src="img/encontros/sala-de-oracao.jpg" 
+                                 alt="Sala de Oração da Dinamus Lisboa" 
+                                 class="absolute inset-0 w-full h-full object-cover"
+                                 loading="lazy"
+                                 width="300"
+                                 height="350">
+                        </picture>
                         <div class="card-content p-6 text-left w-full">
                             <h3 class="font-display text-3xl">Sala de Oração</h3>
                             <p class="font-bold text-lg">Encontros Quinzenais nas Quartas-feiras | 20:00</p>
@@ -251,10 +246,17 @@
 
                     <!-- HANGOUT CARD -->
                     <div class="image-card observe-section w-full md:w-[300px] cursor-auto aspect-[6/7]" style="animation-delay: 0.6s;">
-                        <img src="img/encontros/hangout.jpg" 
-                             alt="Hangout" 
-                             class="absolute inset-0 w-full h-full object-cover"
-                             loading="eager">
+                        <picture>
+                            <!-- WebP para navegadores modernos -->
+                            <source srcset="img/encontros/hangout.webp" type="image/webp">
+                            <!-- JPEG como fallback -->
+                            <img src="img/encontros/hangout.jpg" 
+                                 alt="Hangout - Empreendedorismo com Sabedoria Bíblica" 
+                                 class="absolute inset-0 w-full h-full object-cover"
+                                 loading="lazy"
+                                 width="300"
+                                 height="350">
+                        </picture>
                         <div class="card-content p-6 text-left w-full">
                             <h3 class="font-display text-3xl">Hangout</h3>
                             <p class="font-bold text-lg">Encontros Mensais</p>
@@ -325,13 +327,13 @@
             <div class="container mx-auto px-6">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div class="h-96 md:h-[500px] rounded-lg overflow-hidden shadow-2xl observe-section">
-                        <div id="map-placeholder" class="w-full h-full bg-gray-300 flex items-center justify-center cursor-pointer" onclick="loadMap()">
+                        <div id="map-placeholder" class="w-full h-full bg-gray-300 flex items-center justify-center cursor-pointer" onclick="loadMap()" role="button" tabindex="0" aria-label="Clique para abrir o mapa do Google">
                             <div class="text-center">
-                                <i class="fas fa-map-marker-alt text-4xl text-gray-600 mb-2"></i>
+                                <i class="fas fa-map-marker-alt text-4xl text-gray-600 mb-2" aria-hidden="true"></i>
                                 <p class="text-gray-600">Clique para abrir o mapa</p>
                             </div>
                         </div>
-                        <iframe id="google-map" class="hidden w-full h-full" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe id="google-map" class="hidden w-full h-full" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa da localização da Dinamus Lisboa"></iframe>
                     </div>
                     <div class="text-center lg:text-left observe-section" style="animation-delay: 0.2s;">
                         <h2 class="font-display text-4xl md:text-5xl mb-6">Esperamos por si.</h2>
@@ -340,8 +342,8 @@
                             <p class="text-lg text-gray-300">Culto todos os Domingos às 10:30</p>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <button onclick="openGoogleMaps()" class="bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2">
-                                <i class="fas fa-map-marker-alt"></i>
+                            <button onclick="openGoogleMaps()" class="bg-white text-black font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2" aria-label="Abrir localização no Google Maps">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                                 Abrir no Google Maps
                             </button>
                         </div>
@@ -354,16 +356,16 @@
     <!-- Footer -->
     <footer class="bg-black text-white py-12">
         <div class="container mx-auto px-6 text-center">
-            <img src="img/dnms-logo.png" alt="Logo Dinamus Lisboa" class="h-12 mx-auto mb-4" loading="eager">
-            <p class="text-gray-500 text-sm">&copy; <span id="year"></span> Dinamus Lisboa. Todos os direitos reservados.</p>
-            <p class="text-gray-500 text-sm">
-                Criado por <a href="https://www.linkedin.com/in/allan-baron/" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">Allan Baron</a>
+            <img src="img/dnms-logo.png" alt="Logo Dinamus Lisboa" class="h-12 mx-auto mb-4" loading="lazy" width="120" height="48">
+            <p class="text-gray-400 text-sm">&copy; <span id="year"></span> Dinamus Lisboa. Todos os direitos reservados.</p>
+            <p class="text-gray-400 text-sm">
+                Criado por <a href="https://www.linkedin.com/in/allan-baron/" target="_blank" class="text-gray-300 hover:text-gray-500 transition-colors">Allan Baron</a>
             </p>
         </div>
     </footer>
 
     <!-- Modal da Conferência de Inauguração -->
-    <div id="conferenciaModal" class="fixed inset-0 z-[9999] hidden">
+    <div id="conferenciaModal" class="fixed inset-0 z-[9999] hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <!-- Overlay transparente -->
         <div class="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300" id="modalOverlay"></div>
         
@@ -371,37 +373,34 @@
         <div class="relative z-10 flex items-center justify-center min-h-screen p-3">
             <div class="w-full h-full max-w-none max-h-none mx-auto overflow-hidden transform transition-all duration-700 ease-out scale-90 opacity-0" id="modalContent">
                 <!-- Botão de fechar no canto superior direito -->
-                <button id="closeModal" class="absolute top-0.5 right-6 z-20 bg-black bg-opacity-70 hover:bg-opacity-90 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-lg">
-                    <i class="fas fa-times text-xl"></i>
+                <button id="closeModal" class="absolute top-0.5 right-6 z-20 bg-black bg-opacity-70 hover:bg-opacity-90 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-lg" aria-label="Fechar modal da conferência">
+                    <i class="fas fa-times text-xl" aria-hidden="true"></i>
                 </button>
                 
                 <!-- Imagem da conferência com proporção mantida e margens -->
                 <div class="w-full h-full flex items-center justify-center p-8 pb-12">
                     <img src="img/conferencia-de-inauguracao.jpg" 
-                         alt="Conferência de Inauguração Dinamus Lisboa" 
+                         alt="Conferência de Inauguração Dinamus Lisboa - informações sobre o evento" 
                          class="max-w-full max-h-full object-contain"
-                         loading="lazy">
+                         loading="lazy"
+                         id="modal-title">
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Smooth Scroll Polyfill -->
-    <script src="https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
+    <!-- Scripts otimizados -->
+    <script>
+        // Preload do polyfill apenas se necessário
+        if (!('scrollBehavior' in document.documentElement.style)) {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+    </script>
     
-    <!-- JavaScript Global (deve ser carregado primeiro) -->
-    <script src="js/global.js"></script>
-    
-    <!-- JavaScript do Menu Mobile -->
-    <script src="js/mobile-menu.js"></script>
-    
-    <!-- JavaScript da Página Principal -->
-    <script src="js/main.js"></script>
-    
-    <!-- Script do Modal da Conferência -->
-    <script src="js/conferencia-modal.js"></script>
-    
-    <!-- Script de Verificação de Atualizações -->
-    <script src="js/update-checker.js"></script>
+    <!-- JavaScript -->
+    <script src="js/scripts.min.js" defer></script>
 </body>
 </html>

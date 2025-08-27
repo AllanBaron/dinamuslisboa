@@ -6,16 +6,12 @@
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="Grupos de Conexão Dinamus Lisboa - Encontre o seu grupo perto de si. Pequenos grupos para estudar a Bíblia, criar ligações e crescer juntos na fé.">
-    <meta name="keywords" content="grupos de conexão, dinamus lisboa, estudo bíblico, comunidade cristã, pequenos grupos, lisboa, sintra, margem sul, igreja, fé, crescimento espiritual">
     <meta name="author" content="Dinamus Lisboa">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="Portuguese">
-    <meta name="revisit-after" content="7 days">
     
     <!-- Theme and Color -->
     <meta name="theme-color" content="#000000">
     <meta name="color-scheme" content="dark">
-    <meta name="msapplication-TileColor" content="#000000">
     
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
@@ -28,10 +24,6 @@
     <meta property="og:image:alt" content="Logo Dinamus Lisboa">
     <meta property="og:site_name" content="Dinamus Lisboa">
     <meta property="og:locale" content="pt_PT">
-    
-    <!-- WhatsApp Specific Meta Tags -->
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:secure_url" content="https://dinamuslisboa.pt/img/dnms.jpg">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -47,40 +39,29 @@
     <!-- Title -->
     <title>Grupos de Conexão - Dinamus Lisboa</title>
     
-    <!-- Preload de recursos críticos -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" as="style">
-    
     <!-- DNS prefetch para recursos externos -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-    
-    <!-- Tailwind CSS via Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts com display=swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome com defer -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <!-- Font Awesome otimizado - carregamento assíncrono -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     
     <!-- Favicon -->
     <link rel="shortcut icon" href="/img/favicon/favicon.ico">
-
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-
     <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon.png">
-
     <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/img/favicon/android-chrome-512x512.png">
 
-    <!-- CSS externo -->
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS otimizado -->
+    <link rel="stylesheet" href="css/styles-min.css">
 </head>
 <body class="antialiased">
 
@@ -261,22 +242,18 @@
         </div>
     </footer>
 
-    <!-- Smooth Scroll Polyfill -->
-    <script src="https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js"></script>
+    <!-- Scripts otimizados -->
+    <script>
+        // Preload do polyfill apenas se necessário
+        if (!('scrollBehavior' in document.documentElement.style)) {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/smoothscroll-polyfill@0.4.4/dist/smoothscroll.min.js';
+            script.async = true;
+            document.head.appendChild(script);
+        }
+    </script>
     
-    <!-- JavaScript Global (deve ser carregado primeiro) -->
-    <script src="js/global.js"></script>
-    
-    <!-- JavaScript do Menu Mobile -->
-    <script src="js/mobile-menu.js"></script>
-    
-    <!-- JavaScript para Grupos de Conexão -->
-    <script src="js/grupos-conexao.js"></script>
-
-    <!-- Script do Modal da Conferência -->
-    <script src="js/conferencia-modal.js"></script>
-
-    <!-- Script de Verificação de Atualizações -->
-    <script src="js/update-checker.js"></script>
+    <!-- JavaScript -->
+    <script src="js/scripts.min.js" defer></script>
 </body>
 </html> 
