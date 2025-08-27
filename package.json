@@ -4,9 +4,9 @@
   "description": "Site da Igreja Dinamus Lisboa",
   "main": "index.html",
   "scripts": {
-    "dev": "tailwindcss -i ./css/styles.css -o ./css/styles-min.css --watch",
-    "build:css": "tailwindcss -i ./css/styles.css -o ./css/styles-min.css --minify",
-    "build:js": "uglifyjs js/global.js js/main.js js/mobile-menu.js js/update-checker.js js/conferencia-modal.js js/grupos-conexao.js -o js/scripts.min.js --compress --mangle",
+    "dev": "npx tailwindcss -i ./css/styles.css -o ./css/styles-min.css --watch",
+    "build:css": "npx tailwindcss -i ./css/styles.css -o ./css/styles-min.css --minify",
+    "build:js": "npx uglifyjs js/global.js js/main.js js/mobile-menu.js js/update-checker.js js/conferencia-modal.js js/grupos-conexao.js -o js/scripts.min.js --compress --mangle",
     "build:all": "npm run build:css && npm run build:js"
   },
   "author": "Allan Baron",
